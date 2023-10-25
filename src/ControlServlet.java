@@ -94,6 +94,17 @@ public class ControlServlet extends HttpServlet {
 	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
 	    }
 	    
+	    /********************************/
+	    /**                            **/
+	    /**      DAVID SMITH PAGE      **/
+	    /**                            **/
+	    /********************************/
+	    private void davidSmithPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
+	    	System.out.println("David Smith view");
+			request.setAttribute("listUser", userDAO.listAllUsers());
+	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
+	    }
+	    
 	    
 	    protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	 String email = request.getParameter("email");
@@ -104,6 +115,12 @@ public class ControlServlet extends HttpServlet {
 				 session = request.getSession();
 				 session.setAttribute("username", email);
 				 rootPage(request, response, "");
+	    	 }
+	    	 else if (email.equals("david@gmail.com") && password.equals("david1234")) {		//    DAVID SMITH LOGIN
+				 System.out.println("Login Successful! Redirecting to David Smith");
+				 session = request.getSession();
+				 session.setAttribute("username", email);
+				 davidSmithPage(request, response, "");
 	    	 }
 	    	 else if(userDAO.isValid(email, password)) 
 	    	 {
@@ -131,11 +148,12 @@ public class ControlServlet extends HttpServlet {
 	   	 	String adress_state = request.getParameter("adress_state"); 
 	   	 	String adress_zip_code = request.getParameter("adress_zip_code"); 	   	 	
 	   	 	String confirm = request.getParameter("confirmation");
+	   	 	String role = request.getParameter("role"); 
 	   	 	
 	   	 	if (password.equals(confirm)) {
 	   	 		if (!userDAO.checkEmail(email)) {
 		   	 		System.out.println("Registration Successful! Added to database");
-		            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, 1000,0);
+		            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, 1000,0, role);
 		   	 		userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}

@@ -10,6 +10,7 @@ public class user
 	    protected String adress_state;
 	    protected String adress_zip_code;
 	    protected String birthday;
+	    protected String role;
 	    protected int cash_bal;
 	    protected int PPS_bal;
 	 
@@ -22,14 +23,14 @@ public class user
 	        this.email = email;
 	    }
 	    
-	    public user(String email,String firstName, String lastName, String password,String birthday, String adress_street_num, String adress_street, String adress_city, String adress_state,String adress_zip_code, int cash_bal,  int PPS_bal) 
+	    public user(String email,String firstName, String lastName, String password,String birthday, String adress_street_num, String adress_street, String adress_city, String adress_state,String adress_zip_code, int cash_bal,  int PPS_bal, String role) 
 	    {
-	    	this(firstName,lastName,password,birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code,cash_bal,PPS_bal);
+	    	this(firstName,lastName,password,birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code,cash_bal,PPS_bal, role);
 	    	this.email = email;
 	    }
 	 
 	
-	    public user(String firstName, String lastName, String password,String birthday, String adress_street_num, String adress_street, String adress_city, String adress_state,String adress_zip_code, int cash_bal,  int PPS_bal) 
+	    public user(String firstName, String lastName, String password,String birthday, String adress_street_num, String adress_street, String adress_city, String adress_state,String adress_zip_code, int cash_bal,  int PPS_bal, String role) 
 	    {
 	    	this.firstName = firstName;
 	    	this.lastName = lastName;
@@ -42,6 +43,7 @@ public class user
 	        this.adress_zip_code = adress_zip_code;
 	        this.cash_bal = cash_bal;
 	        this.PPS_bal = PPS_bal;
+	        this.role = role;
 	    }
 	    
 	   //getter and setter methods
@@ -109,6 +111,12 @@ public class user
 	    }
 	    public void setAdress_zip_code(String adress_zip_code) {
 	        this.adress_zip_code = adress_zip_code;
+	    }
+	    public String getRole() {
+	        return role;
+	    }
+	    public void setRole(String role) {
+	        this.role = role;
 	    }
 	    
 	    public int getCash_bal() {
