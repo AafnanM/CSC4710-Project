@@ -104,6 +104,11 @@ public class ControlServlet extends HttpServlet {
 				 session.setAttribute("username", email);
 				 rootPage(request, response, "");
 	    	 }
+	    	 else if (email.equals("david@gmail.com")) {
+	    		 currentUser = email;
+				 System.out.println("Login Successful! Redirecting to David Smith");
+				 request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	    	 }
 	    	 else if(userDAO.isValid(email, password)) 
 	    	 {
 			 	 
