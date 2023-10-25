@@ -1,0 +1,88 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreateTablesWithConstraints {
+    public static void main(String[] args) {
+        String jdbcUrl = "jdbc:mysql://localhost:3306/davidsmith?";
+        String username = "root123";
+        String password = "2500";
+
+        try {
+            Connection connection = DriverManager.getConnection(jdbcUrl, root123, 2500);
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("CREATE TABLE Clients (" +
+                "ClientID INT PRIMARY KEY," +
+                "FirstName VARCHAR(50)," +
+                "LastName VARCHAR(50)," +
+                "Address VARCHAR(100)," +
+                "CreditCardInfo VARCHAR(16)," +
+                "PhoneNumber VARCHAR(15)," +
+                "Email VARCHAR(100)" +
+                ")");
+            
+            statement.executeUpdate("CREATE TABLE TreeRequests (" +
+                "RequestID INT PRIMARY KEY," +
+                "ClientID INT," +
+                "Note TEXT," +
+                "Status VARCHAR(20)," +
+                "FOREIGN KEY (ClientID) REFERENCES Clients(ClientID)" +
+                ")");
+            
+            statement.executeUpdate("CREATE TABLE TreesToCut (" +
+                "TreeID INT PRIMARY KEY," +
+                "RequestID INT," +
+                "Size DECIMAL(5, 2)," +
+                "Height DECIMAL(5, 2)," +
+                "Location VARCHAR(100)," +
+                "IsNearHouse BOOLEAN," +
+                "FOREIGN KEY (RequestID) REFERENCES TreeRequests(RequestID)" +
+                ")");
+            
+            statement.executeUpdate("CREATE TABLE Quotes (" +
+                "QuoteID INT PRIMARY KEY," +
+                "RequestID INT," +
+                "InitialPrice DECIMAL(10, 2)," +
+                "WorkPeriodStart DATE," +
+                "WorkPeriodEnd DATE," +
+                "Note TEXT," +
+                "Status VARCHAR(20)," +
+                "FOREIGN KEY (RequestID) REFERENCES TreeRequests(RequestID)" +
+                ")");
+            
+            // Create OrdersOfWork table
+            statement.executeUpdate("CREATE TABLE OrdersOfWork (" +
+                "OrderID INT PRIMARY KEY," +
+                "RequestID INT," +
+                "Status VARCHAR(20)," +
+                "FOREIGN KEY (RequestID) REFERENCES TreeRequests(RequestID)" +
+                ")");
+            
+            statement.executeUpdate("CREATE TABLE Bills (" +
+                "BillID INT PRIMARY KEY," +
+                "OrderID INT," +
+                "TotalAmount DECIMAL(10, 2)," +
+                "Status VARCHAR(20)," +
+                "FOREIGN KEY (OrderID) REFERENCES OrdersOfWork(OrderID)" +
+                ")");
+            
+            statement.executeUpdate("CREATE TABLE Disputes (" +
+                "DisputeID INT PRIMARY KEY," +
+                "BillID INT," +
+                "Note TEXT," +
+                "Status VARCHAR(20)," +
+                "FOREIGN KEY (BillID) REFERENCES Bills(BillID)" +
+                ")");
+            
+            statement.close();
+            connection.close();
+
+            System.out.println("Tables created successfully.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
