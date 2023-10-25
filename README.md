@@ -12,8 +12,10 @@
 
 ## Contributions
 ### Aafnan Mahmood
+- Time spent working together: ~2 hours
 - Created Github repository and pushed pre-existing code.
 - Added roles for David Smith, Admin root, and client to the database and during the registration process.
 ### Chalana Weerawardana
+- Time spent working together: ~2 hours
 - Created the E-R diagram for the system.
 - Wrote a set of CREATE TABLE statements based on the E-R diagram.
