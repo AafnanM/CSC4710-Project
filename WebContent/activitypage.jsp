@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Activity page</title>
+<title>Client page</title>
 </head>
 
 <center><h1>Welcome! You have been successfully logged in</h1> </center>

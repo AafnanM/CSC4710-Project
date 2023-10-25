@@ -35,6 +35,13 @@
 	
 				</tr>
 				<tr>
+					<th>Role: </th>
+					<td align="center" colspan="3">
+						<input type="text" name="role" size="45" value="David Smith, Clients, or Admin root" onfocus="this.value=''">
+					</td>
+	
+				</tr>
+				<tr>
 					<th>Password: </th>
 					<td align="center" colspan="3"> 
 						<input type="password" name="password" size="45" value="password" onfocus="this.value=''">
