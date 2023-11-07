@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Client page</title>
+<title>David Smith page</title>
 </head>
 
 <center><h1>Welcome! You have been successfully logged in as David Smith</h1> </center>

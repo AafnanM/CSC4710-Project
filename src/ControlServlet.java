@@ -94,6 +94,12 @@ public class ControlServlet extends HttpServlet {
 	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
 	    }
 	    
+	    private void davidPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
+	    	System.out.println("root view");
+			request.setAttribute("listUser", userDAO.listAllUsers());
+	    	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	    }
+	    
 	    protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	 String email = request.getParameter("email");
 	    	 String password = request.getParameter("password");
@@ -105,9 +111,10 @@ public class ControlServlet extends HttpServlet {
 				 rootPage(request, response, "");
 	    	 }
 	    	 else if (email.equals("david@gmail.com")) {
-	    		 currentUser = email;
-				 System.out.println("Login Successful! Redirecting to David Smith");
-				 request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	    		 System.out.println("Login Successful! Redirecting to David Smith");
+				 session = request.getSession();
+				 session.setAttribute("username", email);
+				 davidPage(request, response, "");
 	    	 }
 	    	 else if(userDAO.isValid(email, password)) 
 	    	 {
