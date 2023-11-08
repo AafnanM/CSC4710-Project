@@ -14,7 +14,8 @@
 ### Aafnan Mahmood
 - Time spent working together: ~2 hours
 - Created Github repository and pushed pre-existing code.
-- Added roles for David Smith, Admin root, and client to the database and during the registration process.
+- Added roles for David Smith, Admin root, and client to the database and during the registration process. Also modified existing methods to support the change.
+- Added multiple database entries based on the required fields needed for David's page and the client's page. Also modified existing methods to support the change.
 ### Chalana Weerawardana
 - Time spent working together: ~2 hours
 - Created the E-R diagram for the system.
