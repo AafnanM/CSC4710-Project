@@ -94,6 +94,12 @@ public class ControlServlet extends HttpServlet {
 	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
 	    }
 	    
+	    private void davidPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
+	    	System.out.println("root view");
+			request.setAttribute("listUser", userDAO.listAllUsers());
+	    	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	    }
+	    
 	    protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	 String email = request.getParameter("email");
 	    	 String password = request.getParameter("password");
@@ -105,9 +111,10 @@ public class ControlServlet extends HttpServlet {
 				 rootPage(request, response, "");
 	    	 }
 	    	 else if (email.equals("david@gmail.com")) {
-	    		 currentUser = email;
-				 System.out.println("Login Successful! Redirecting to David Smith");
-				 request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	    		 System.out.println("Login Successful! Redirecting to David Smith");
+				 session = request.getSession();
+				 session.setAttribute("username", email);
+				 davidPage(request, response, "");
 	    	 }
 	    	 else if(userDAO.isValid(email, password)) 
 	    	 {
@@ -129,18 +136,32 @@ public class ControlServlet extends HttpServlet {
 	   	 	String lastName = request.getParameter("lastName");
 	   	 	String password = request.getParameter("password");
 	   	 	String birthday = request.getParameter("birthday");
+	   	 	String confirm = request.getParameter("confirmation");
+	   	 	/** OLD FIELDS FOR USER (ADDRESS)
 	   	 	String adress_street_num = request.getParameter("adress_street_num"); 
 	   	 	String adress_street = request.getParameter("adress_street"); 
 	   	 	String adress_city = request.getParameter("adress_city"); 
 	   	 	String adress_state = request.getParameter("adress_state"); 
 	   	 	String adress_zip_code = request.getParameter("adress_zip_code"); 	   	 	
-	   	 	String confirm = request.getParameter("confirmation");
+	   	 	*/
 	   	 	String role = request.getParameter("role"); 
+	   	 	String pic1 = request.getParameter("pic1"); 
+	   	 	String pic2 = request.getParameter("pic2"); 
+	   	 	String pic3 = request.getParameter("pic3"); 
+	   	 	String treeSize = request.getParameter("treeSize"); 
+	   	 	String treeHeight = request.getParameter("treeHeight"); 
+	   	 	String location = request.getParameter("location"); 
+	   	 	String howNear = request.getParameter("howNear"); 
+	   	 	String accepted = request.getParameter("accepted"); 
+	   	 	String clientNote = request.getParameter("clientNote"); 
+	   	 	String davidNote = request.getParameter("davidNote"); 
+	   	 	String price = request.getParameter("price"); 
 	   	 	
 	   	 	if (password.equals(confirm)) {
 	   	 		if (!userDAO.checkEmail(email)) {
 		   	 		System.out.println("Registration Successful! Added to database");
-		            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, 1000,0, role);
+		            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+		            		clientNote, accepted, davidNote, price);
 		   	 		userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}
