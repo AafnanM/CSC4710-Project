@@ -136,18 +136,32 @@ public class ControlServlet extends HttpServlet {
 	   	 	String lastName = request.getParameter("lastName");
 	   	 	String password = request.getParameter("password");
 	   	 	String birthday = request.getParameter("birthday");
+	   	 	String confirm = request.getParameter("confirmation");
+	   	 	/** OLD FIELDS FOR USER (ADDRESS)
 	   	 	String adress_street_num = request.getParameter("adress_street_num"); 
 	   	 	String adress_street = request.getParameter("adress_street"); 
 	   	 	String adress_city = request.getParameter("adress_city"); 
 	   	 	String adress_state = request.getParameter("adress_state"); 
 	   	 	String adress_zip_code = request.getParameter("adress_zip_code"); 	   	 	
-	   	 	String confirm = request.getParameter("confirmation");
+	   	 	*/
 	   	 	String role = request.getParameter("role"); 
+	   	 	String pic1 = request.getParameter("pic1"); 
+	   	 	String pic2 = request.getParameter("pic2"); 
+	   	 	String pic3 = request.getParameter("pic3"); 
+	   	 	String treeSize = request.getParameter("treeSize"); 
+	   	 	String treeHeight = request.getParameter("treeHeight"); 
+	   	 	String location = request.getParameter("location"); 
+	   	 	String howNear = request.getParameter("howNear"); 
+	   	 	String accepted = request.getParameter("accepted"); 
+	   	 	String clientNote = request.getParameter("clientNote"); 
+	   	 	String davidNote = request.getParameter("davidNote"); 
+	   	 	String price = request.getParameter("price"); 
 	   	 	
 	   	 	if (password.equals(confirm)) {
 	   	 		if (!userDAO.checkEmail(email)) {
 		   	 		System.out.println("Registration Successful! Added to database");
-		            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, 1000,0, role);
+		            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+		            		clientNote, accepted, davidNote, price);
 		   	 		userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}

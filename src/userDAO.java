@@ -92,17 +92,30 @@ public class userDAO
             String lastName = resultSet.getString("lastName");
             String password = resultSet.getString("password");
             String birthday = resultSet.getString("birthday");
+            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
             String adress_street_num = resultSet.getString("adress_street_num"); 
             String adress_street = resultSet.getString("adress_street"); 
             String adress_city = resultSet.getString("adress_city"); 
             String adress_state = resultSet.getString("adress_state"); 
             String adress_zip_code = resultSet.getString("adress_zip_code"); 
-            String role = resultSet.getString("role"); 
             int cash_bal = resultSet.getInt("cash_bal");
             int PPS_bal = resultSet.getInt("PPS_bal");
-
+            */
+            String role = resultSet.getString("role"); 
+            String pic1 = resultSet.getString("pic1"); 
+            String pic2 = resultSet.getString("pic2"); 
+            String pic3 = resultSet.getString("pic3"); 
+            String treeSize = resultSet.getString("treeSize"); 
+            String treeHeight = resultSet.getString("treeHeight"); 
+            String location = resultSet.getString("location"); 
+            String howNear = resultSet.getString("howNear"); 
+            String clientNote = resultSet.getString("clientNote"); 
+            String accepted = resultSet.getString("accepted"); 
+            String davidNote = resultSet.getString("davidNote"); 
+            String price = resultSet.getString("price"); 
              
-            user users = new user(email,firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code, cash_bal,PPS_bal, role);
+            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, accepted, davidNote, price);
             listUser.add(users);
         }        
         resultSet.close();
@@ -118,13 +131,15 @@ public class userDAO
     
     public void insert(user users) throws SQLException {
     	connect_func("root","pass1234");         
-		String sql = "insert into User(email, firstName, lastName, password, birthday,adress_street_num, adress_street,adress_city,adress_state,adress_zip_code,cash_bal,PPS_bal, role) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?)";
+		String sql = "insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, "
+				+ "clientNote, accepted, davidNote, price) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, users.getEmail());
 			preparedStatement.setString(2, users.getFirstName());
 			preparedStatement.setString(3, users.getLastName());
 			preparedStatement.setString(4, users.getPassword());
 			preparedStatement.setString(5, users.getBirthday());
+			/** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
 			preparedStatement.setString(6, users.getAdress_street_num());		
 			preparedStatement.setString(7, users.getAdress_street());		
 			preparedStatement.setString(8, users.getAdress_city());		
@@ -132,7 +147,19 @@ public class userDAO
 			preparedStatement.setString(10, users.getAdress_zip_code());		
 			preparedStatement.setInt(11, users.getCash_bal());		
 			preparedStatement.setInt(12, users.getPPS_bal());	
-			preparedStatement.setString(13, users.getRole());
+			*/
+			preparedStatement.setString(6, users.getRole());
+			preparedStatement.setString(7, users.getPic1());
+			preparedStatement.setString(8, users.getPic2());
+			preparedStatement.setString(9, users.getPic3());
+			preparedStatement.setString(10, users.getTreeSize());
+			preparedStatement.setString(11, users.getTreeHeight());
+			preparedStatement.setString(12, users.getLocation());
+			preparedStatement.setString(13, users.getHowNear());
+			preparedStatement.setString(14, users.getClientNote());
+			preparedStatement.setString(15, users.getAccepted());
+			preparedStatement.setString(16, users.getDavidNote());
+			preparedStatement.setString(17, users.getPrice());
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -151,7 +178,8 @@ public class userDAO
     }
      
     public boolean update(user users) throws SQLException {
-        String sql = "update User set firstName=?, lastName =?,password = ?,birthday=?,adress_street_num =?, adress_street=?,adress_city=?,adress_state=?,adress_zip_code=?, cash_bal=?, PPS_bal =?, role =? where email = ?";
+        String sql = "update User set firstName=?, lastName =?, password =?, birthday=?, role =?, pic1 =?, pic2 =?, pic3 =?, treeSize =?, treeHeight =?,"
+        		+ "location =?, howNear =?, clientNote =?, accepted =?, davidNote =?, price =? where email = ?";
         connect_func();
         
         preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
@@ -160,6 +188,7 @@ public class userDAO
 		preparedStatement.setString(3, users.getLastName());
 		preparedStatement.setString(4, users.getPassword());
 		preparedStatement.setString(5, users.getBirthday());
+		/** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
 		preparedStatement.setString(6, users.getAdress_street_num());		
 		preparedStatement.setString(7, users.getAdress_street());		
 		preparedStatement.setString(8, users.getAdress_city());		
@@ -167,7 +196,19 @@ public class userDAO
 		preparedStatement.setString(10, users.getAdress_zip_code());		
 		preparedStatement.setInt(11, users.getCash_bal());		
 		preparedStatement.setInt(12, users.getPPS_bal());
-		preparedStatement.setString(13, users.getRole());
+		*/
+		preparedStatement.setString(6, users.getRole());
+		preparedStatement.setString(7, users.getPic1());
+		preparedStatement.setString(8, users.getPic2());
+		preparedStatement.setString(9, users.getPic3());
+		preparedStatement.setString(10, users.getTreeSize());
+		preparedStatement.setString(11, users.getTreeHeight());
+		preparedStatement.setString(12, users.getLocation());
+		preparedStatement.setString(13, users.getHowNear());
+		preparedStatement.setString(14, users.getClientNote());
+		preparedStatement.setString(15, users.getAccepted());
+		preparedStatement.setString(16, users.getDavidNote());
+		preparedStatement.setString(17, users.getPrice());
          
         boolean rowUpdated = preparedStatement.executeUpdate() > 0;
         preparedStatement.close();
@@ -190,15 +231,30 @@ public class userDAO
             String lastName = resultSet.getString("lastName");
             String password = resultSet.getString("password");
             String birthday = resultSet.getString("birthday");
+            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
             String adress_street_num = resultSet.getString("adress_street_num"); 
             String adress_street = resultSet.getString("adress_street"); 
             String adress_city = resultSet.getString("adress_city"); 
             String adress_state = resultSet.getString("adress_state"); 
             String adress_zip_code = resultSet.getString("adress_zip_code"); 
-            String role = resultSet.getString("role"); 
             int cash_bal = resultSet.getInt("cash_bal");
             int PPS_bal = resultSet.getInt("PPS_bal");
-            user = new user(email, firstName, lastName, password, birthday, adress_street_num,  adress_street,  adress_city,  adress_state,  adress_zip_code,cash_bal,PPS_bal, role);
+            */
+            String role = resultSet.getString("role");
+            String pic1 = resultSet.getString("pic1"); 
+	   	 	String pic2 = resultSet.getString("pic2"); 
+	   	 	String pic3 = resultSet.getString("pic3"); 
+	   	 	String treeSize = resultSet.getString("treeSize"); 
+	   	 	String treeHeight = resultSet.getString("treeHeight"); 
+	   	 	String location = resultSet.getString("location"); 
+	   	 	String howNear = resultSet.getString("howNear"); 
+	   	 	String clientNote = resultSet.getString("clientNote"); 
+	   	 	String accepted = resultSet.getString("accepted");
+	   	 	String davidNote = resultSet.getString("davidNote"); 
+	   	 	String price = resultSet.getString("price"); 
+            
+            user = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, accepted, davidNote, price);
         }
          
         resultSet.close();
@@ -282,6 +338,7 @@ public class userDAO
 					            "lastName VARCHAR(10) NOT NULL, " +
 					            "password VARCHAR(20) NOT NULL, " +
 					            "birthday DATE NOT NULL, " +
+					            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
 					            "adress_street_num VARCHAR(4) , "+ 
 					            "adress_street VARCHAR(30) , "+ 
 					            "adress_city VARCHAR(20)," + 
@@ -289,22 +346,34 @@ public class userDAO
 					            "adress_zip_code VARCHAR(5),"+ 
 					            "cash_bal DECIMAL(13,2) DEFAULT 1000,"+ 
 					            "PPS_bal DECIMAL(13,2) DEFAULT 0,"+
+					            */
 					            "role VARCHAR(20),"+ 
+					            "pic1 VARCHAR(50), "+
+					            "pic2 VARCHAR(50), "+
+					            "pic3 VARCHAR(50), "+
+					            "treeSize VARCHAR(20), "+
+					            "treeHeight VARCHAR(10), "+
+					            "location VARCHAR(50), "+
+					            "howNear VARCHAR(50), "+
+					            "clientNote VARCHAR(100), "+
+					            "accepted VARCHAR(10), "+
+					            "davidNote VARCHAR(100), "+
+					            "price VARCHAR(100), "+
 					            "PRIMARY KEY (email) "+"); ")
         					};
-        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, adress_street_num, adress_street, adress_city, adress_state, adress_zip_code, cash_bal, PPS_bal, role)"+
-        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', '1234', 'whatever street', 'detroit', 'MI', '48202','1000', '0', 'Clients'),"+
-			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', '1000', 'hi street', 'mama', 'MO', '12345','1000', '0', 'Clients'),"+
-			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', '1234', 'ivan street', 'tata','CO','12561','1000', '0', 'Clients'),"+
-			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', '3214','marko street', 'brat', 'DU', '54321','1000', '0', 'Clients'),"+
-			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', '4500', 'frey street', 'sestra', 'MI', '48202','1000', '0', 'Clients'),"+
-			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', '1245', 'm8s street', 'baka', 'IL', '48000','1000', '0', 'Clients'),"+
-			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', '2468', 'yolos street', 'ides', 'CM', '24680','1000', '0', 'Clients'),"+
-			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', '4680', 'egypt street', 'lolas', 'DT', '13579','1000', '0', 'Clients'),"+
-			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', '1234', 'sign street', 'samo ne tu','MH', '09876','1000', '0', 'Clients'),"+
-			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', '0981', 'snoop street', 'kojik', 'HW', '87654','1000', '0', 'Clients'),"+
-			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', '0000', 'Default', 'Default', '0', '00000','1000','1000000000', 'David Smith'),"+
-			    			"('root', 'default', 'default','pass1234', '2020-02-03', '0000', 'Default', 'Default', '0', '00000','1000','1000000000', 'Admin root');")
+        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, accepted, davidNote, price)"+
+        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '');")
 			    			};
         
         //for loop to put these in database
