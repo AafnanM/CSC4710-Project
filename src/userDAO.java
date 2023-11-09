@@ -123,6 +123,41 @@ public class userDAO
         return listUser;
     }
     
+    public List<user> listAllQuotes() throws SQLException {
+        List<user> listUser = new ArrayList<user>();        
+        String sql = "SELECT * FROM User where treeSize != ''";      
+        connect_func();      
+        statement = (Statement) connect.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+         
+        while (resultSet.next()) {
+            String email = resultSet.getString("email");
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
+            String password = resultSet.getString("password");
+            String birthday = resultSet.getString("birthday");
+            String role = resultSet.getString("role"); 
+            String pic1 = resultSet.getString("pic1"); 
+            String pic2 = resultSet.getString("pic2"); 
+            String pic3 = resultSet.getString("pic3"); 
+            String treeSize = resultSet.getString("treeSize"); 
+            String treeHeight = resultSet.getString("treeHeight"); 
+            String location = resultSet.getString("location"); 
+            String howNear = resultSet.getString("howNear"); 
+            String clientNote = resultSet.getString("clientNote"); 
+            String accepted = resultSet.getString("accepted"); 
+            String davidNote = resultSet.getString("davidNote"); 
+            String price = resultSet.getString("price"); 
+             
+            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, accepted, davidNote, price);
+            listUser.add(users);
+        }        
+        resultSet.close();
+        disconnect();        
+        return listUser;
+    }
+    
     protected void disconnect() throws SQLException {
         if (connect != null && !connect.isClosed()) {
         	connect.close();
@@ -183,32 +218,24 @@ public class userDAO
         connect_func();
         
         preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
-        preparedStatement.setString(1, users.getEmail());
-		preparedStatement.setString(2, users.getFirstName());
-		preparedStatement.setString(3, users.getLastName());
-		preparedStatement.setString(4, users.getPassword());
-		preparedStatement.setString(5, users.getBirthday());
-		/** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-		preparedStatement.setString(6, users.getAdress_street_num());		
-		preparedStatement.setString(7, users.getAdress_street());		
-		preparedStatement.setString(8, users.getAdress_city());		
-		preparedStatement.setString(9, users.getAdress_state());		
-		preparedStatement.setString(10, users.getAdress_zip_code());		
-		preparedStatement.setInt(11, users.getCash_bal());		
-		preparedStatement.setInt(12, users.getPPS_bal());
-		*/
-		preparedStatement.setString(6, users.getRole());
-		preparedStatement.setString(7, users.getPic1());
-		preparedStatement.setString(8, users.getPic2());
-		preparedStatement.setString(9, users.getPic3());
-		preparedStatement.setString(10, users.getTreeSize());
-		preparedStatement.setString(11, users.getTreeHeight());
-		preparedStatement.setString(12, users.getLocation());
-		preparedStatement.setString(13, users.getHowNear());
-		preparedStatement.setString(14, users.getClientNote());
-		preparedStatement.setString(15, users.getAccepted());
-		preparedStatement.setString(16, users.getDavidNote());
-		preparedStatement.setString(17, users.getPrice());
+        //preparedStatement.setString(1, users.getEmail());
+		preparedStatement.setString(1, users.getFirstName());
+		preparedStatement.setString(2, users.getLastName());
+		preparedStatement.setString(3, users.getPassword());
+		preparedStatement.setString(4, users.getBirthday());
+		preparedStatement.setString(5, users.getRole());
+		preparedStatement.setString(6, users.getPic1());
+		preparedStatement.setString(7, users.getPic2());
+		preparedStatement.setString(8, users.getPic3());
+		preparedStatement.setString(9, users.getTreeSize());
+		preparedStatement.setString(10, users.getTreeHeight());
+		preparedStatement.setString(11, users.getLocation());
+		preparedStatement.setString(12, users.getHowNear());
+		preparedStatement.setString(13, users.getClientNote());
+		preparedStatement.setString(14, users.getAccepted());
+		preparedStatement.setString(15, users.getDavidNote());
+		preparedStatement.setString(16, users.getPrice());
+		preparedStatement.setString(17, users.getEmail());
          
         boolean rowUpdated = preparedStatement.executeUpdate() > 0;
         preparedStatement.close();
@@ -352,11 +379,11 @@ public class userDAO
 					            "pic2 VARCHAR(50), "+
 					            "pic3 VARCHAR(50), "+
 					            "treeSize VARCHAR(20), "+
-					            "treeHeight VARCHAR(10), "+
+					            "treeHeight VARCHAR(20), "+
 					            "location VARCHAR(50), "+
 					            "howNear VARCHAR(50), "+
 					            "clientNote VARCHAR(100), "+
-					            "accepted VARCHAR(10), "+
+					            "accepted VARCHAR(20), "+
 					            "davidNote VARCHAR(100), "+
 					            "price VARCHAR(100), "+
 					            "PRIMARY KEY (email) "+"); ")
