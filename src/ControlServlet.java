@@ -53,6 +53,12 @@ public class ControlServlet extends HttpServlet {
         	case "/register":
         		register(request, response);
         		break;
+        	case "/client":
+        		clientSubmit(request, response);
+        		break;
+        	case "/david":
+        		davidSubmit(request, response);
+        		break;
         	case "/initialize":
         		userDAO.init();
         		System.out.println("Database successfully initialized!");
@@ -96,7 +102,7 @@ public class ControlServlet extends HttpServlet {
 	    
 	    private void davidPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
 	    	System.out.println("root view");
-			request.setAttribute("listUser", userDAO.listAllUsers());
+			request.setAttribute("listQuote", userDAO.listAllQuotes());
 	    	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
 	    
@@ -176,7 +182,72 @@ public class ControlServlet extends HttpServlet {
 	   		 request.setAttribute("errorTwo","Registration failed: Password and Password Confirmation do not match.");
 	   		 request.getRequestDispatcher("register.jsp").forward(request, response);
 	   	 	}
-	    }    
+	    }   
+	    
+	    private void clientSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	String email = currentUser;
+	    	user users = userDAO.getUser(email);
+	    	String firstName = users.getFirstName();
+	   	 	String lastName = users.getLastName();
+	   	 	String password = users.getPassword();
+	   	 	String birthday = users.getBirthday();
+	   	 	String role = users.getRole();
+	   	 	String pic1 = request.getParameter("pic1"); 
+	   	 	String pic2 = request.getParameter("pic2"); 
+	   	 	String pic3 = request.getParameter("pic3"); 
+	   	 	String treeSize = request.getParameter("treeSize"); 
+	   	 	String treeHeight = request.getParameter("treeHeight"); 
+	   	 	String location = request.getParameter("location"); 
+	   	 	String howNear = request.getParameter("howNear"); 
+	   	 	String accepted = request.getParameter("accepted"); 
+	   	 	String clientNote = request.getParameter("clientNote"); 
+	   	    String davidNote = request.getParameter("davidNote"); 
+	   	 	String price = request.getParameter("price"); 
+	   	 	
+		   	System.out.println("Quote submission successful! Updated database");
+	        user updatedUser = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+	         		clientNote, accepted, davidNote, price);
+		 	userDAO.update(updatedUser);
+		 	response.sendRedirect("login.jsp");
+	    }
+	    
+	    private void davidSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	String email = request.getParameter("email");
+	    	user users = userDAO.getUser(email);
+	   	 	
+	   	 	if (userDAO.checkEmail(email)) {
+		   	 	String firstName = users.getFirstName();
+		   	 	String lastName = users.getLastName();
+		   	 	String password = users.getPassword();
+		   	 	String birthday = users.getBirthday();
+		   	 	String role = users.getRole();
+		   	 	String pic1 = users.getPic1();
+		   	 	String pic2 = users.getPic2();
+		   	 	String pic3 = users.getPic3();
+		   	 	String treeSize = users.getTreeSize();
+		   	 	String treeHeight = users.getTreeHeight();
+		   	 	String location = users.getLocation();
+		   	 	String howNear = users.getHowNear();
+		   	 	String accepted = request.getParameter("accepted"); 
+		   	 	String clientNote = users.getClientNote();
+		   	    String davidNote = request.getParameter("davidNote"); 
+		   	 	String price = request.getParameter("price"); 
+	   	 	
+			   	System.out.println("Quote response successful! Updated database");
+		        user updatedUser = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+		         		clientNote, accepted, davidNote, price);
+			 	userDAO.update(updatedUser);
+			 	request.setAttribute("listQuote", userDAO.listAllQuotes());
+	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	   	 	}
+	   	 	else {
+	   	 		System.out.println("Response failed, enter a valid email to respond to");
+	    		request.setAttribute("errorOne","Response failed: Enter a valid email to respond to.");
+	    		request.setAttribute("listQuote", userDAO.listAllQuotes());
+	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
+	   	 	}
+	    }
+	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    	currentUser = "";
         		response.sendRedirect("login.jsp");
