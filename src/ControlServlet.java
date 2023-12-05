@@ -101,7 +101,7 @@ public class ControlServlet extends HttpServlet {
 	    }
 	    
 	    private void davidPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
-	    	System.out.println("root view");
+	    	System.out.println("David view");
 			request.setAttribute("listQuote", userDAO.listAllQuotes());
 	    	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
@@ -143,13 +143,6 @@ public class ControlServlet extends HttpServlet {
 	   	 	String password = request.getParameter("password");
 	   	 	String birthday = request.getParameter("birthday");
 	   	 	String confirm = request.getParameter("confirmation");
-	   	 	/** OLD FIELDS FOR USER (ADDRESS)
-	   	 	String adress_street_num = request.getParameter("adress_street_num"); 
-	   	 	String adress_street = request.getParameter("adress_street"); 
-	   	 	String adress_city = request.getParameter("adress_city"); 
-	   	 	String adress_state = request.getParameter("adress_state"); 
-	   	 	String adress_zip_code = request.getParameter("adress_zip_code"); 	   	 	
-	   	 	*/
 	   	 	String role = request.getParameter("role"); 
 	   	 	String pic1 = request.getParameter("pic1"); 
 	   	 	String pic2 = request.getParameter("pic2"); 
@@ -162,12 +155,31 @@ public class ControlServlet extends HttpServlet {
 	   	 	String clientNote = request.getParameter("clientNote"); 
 	   	 	String davidNote = request.getParameter("davidNote"); 
 	   	 	String price = request.getParameter("price"); 
+	   	 	//  Part 3
+	   	 	String workStart = request.getParameter("workStart");
+	   	 	String workEnd = request.getParameter("workEnd");
+	   	 	double billCost = -1;
+	   	 	String billStatus = request.getParameter("billStatus");
+	   	 	String billGiven = request.getParameter("billGiven");
+	   	 	String billPaid = request.getParameter("billPaid");
+	   	 	String orderCompleted = request.getParameter("orderCompleted");
+	   	 	String treeCutDates = request.getParameter("treeCutDates");
+	   	 	String quoteClientAccept = request.getParameter("quoteClientAccept");
+	   	 	int treesCut = 0;
+	   	 	int totalTreesCut = 0;
+	   	 	String easyClient = request.getParameter("easyClient");
+	   	 	//  Credit card info
+	   	 	String cardNumber = request.getParameter("cardNumber");
+	   	 	String cardExpiration = request.getParameter("cardExpiration");
+	   	 	String cardSecurityCode = request.getParameter("cardSecurityCode");
+	   	 	
 	   	 	
 	   	 	if (password.equals(confirm)) {
 	   	 		if (!userDAO.checkEmail(email)) {
 		   	 		System.out.println("Registration Successful! Added to database");
 		            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-		            		clientNote, accepted, davidNote, price);
+		            		clientNote, accepted, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+		            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 		   	 		userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}
@@ -204,9 +216,30 @@ public class ControlServlet extends HttpServlet {
 	   	    String davidNote = request.getParameter("davidNote"); 
 	   	 	String price = request.getParameter("price"); 
 	   	 	
+	   	 	//  ------------MONITOR AND FIX IF NEEDED------------
+	   	 	//  Part 3
+	   	 	String workStart = request.getParameter("workStart");
+	   	 	String workEnd = request.getParameter("workEnd");
+	   	 	double billCost = Double.parseDouble(request.getParameter("billCost"));
+	   	 	String billStatus = request.getParameter("billStatus");
+	   	 	String billGiven = request.getParameter("billGiven");
+	   	 	String billPaid = request.getParameter("billPaid");
+	   	 	String orderCompleted = request.getParameter("orderCompleted");
+	   	 	String treeCutDates = request.getParameter("treeCutDates");
+	   	 	String quoteClientAccept = request.getParameter("quoteClientAccept");
+	   	 	int treesCut = Integer.parseInt(request.getParameter("treesCut"));
+	   	 	int totalTreesCut = Integer.parseInt(request.getParameter("totalTreesCut"));
+	   	 	String easyClient = request.getParameter("easyClient");
+	   	 	//  Credit card info
+	   	 	String cardNumber = request.getParameter("cardNumber");
+	   	 	String cardExpiration = request.getParameter("cardExpiration");
+	   	 	String cardSecurityCode = request.getParameter("cardSecurityCode");
+	   	 	
+	   	 	
 		   	System.out.println("Quote submission successful! Updated database");
-	        user updatedUser = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-	         		clientNote, accepted, davidNote, price);
+	        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+	         		clientNote, accepted, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 		 	userDAO.update(updatedUser);
 		 	response.sendRedirect("login.jsp");
 	    }
@@ -232,10 +265,31 @@ public class ControlServlet extends HttpServlet {
 		   	 	String clientNote = users.getClientNote();
 		   	    String davidNote = request.getParameter("davidNote"); 
 		   	 	String price = request.getParameter("price"); 
+		   	 	
+		   	 	//  ------------MONITOR AND FIX IF NEEDED------------
+		   	 	//  Part 3
+		   	 	String workStart = request.getParameter("workStart");
+		   	 	String workEnd = request.getParameter("workEnd");
+		   	 	double billCost = Double.parseDouble(request.getParameter("billCost"));
+		   	 	String billStatus = request.getParameter("billStatus");
+		   	 	String billGiven = request.getParameter("billGiven");
+		   	 	String billPaid = request.getParameter("billPaid");
+		   	 	String orderCompleted = request.getParameter("orderCompleted");
+		   	 	String treeCutDates = request.getParameter("treeCutDates");
+		   	 	String quoteClientAccept = request.getParameter("quoteClientAccept");
+		   	 	int treesCut = Integer.parseInt(request.getParameter("treesCut"));
+		   	 	int totalTreesCut = Integer.parseInt(request.getParameter("totalTreesCut"));
+		   	 	String easyClient = request.getParameter("easyClient");
+		   	 	//  Credit card info
+		   	 	String cardNumber = request.getParameter("cardNumber");
+		   	 	String cardExpiration = request.getParameter("cardExpiration");
+		   	 	String cardSecurityCode = request.getParameter("cardSecurityCode");
 	   	 	
+		   	 	
 			   	System.out.println("Quote response successful! Updated database");
-		        user updatedUser = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-		         		clientNote, accepted, davidNote, price);
+		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+		         		clientNote, accepted, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
 			 	request.setAttribute("listQuote", userDAO.listAllQuotes());
 	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);

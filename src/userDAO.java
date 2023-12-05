@@ -85,22 +85,13 @@ public class userDAO
         connect_func();      
         statement = (Statement) connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-         
+        
         while (resultSet.next()) {
             String email = resultSet.getString("email");
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
             String password = resultSet.getString("password");
             String birthday = resultSet.getString("birthday");
-            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-            String adress_street_num = resultSet.getString("adress_street_num"); 
-            String adress_street = resultSet.getString("adress_street"); 
-            String adress_city = resultSet.getString("adress_city"); 
-            String adress_state = resultSet.getString("adress_state"); 
-            String adress_zip_code = resultSet.getString("adress_zip_code"); 
-            int cash_bal = resultSet.getInt("cash_bal");
-            int PPS_bal = resultSet.getInt("PPS_bal");
-            */
             String role = resultSet.getString("role"); 
             String pic1 = resultSet.getString("pic1"); 
             String pic2 = resultSet.getString("pic2"); 
@@ -110,14 +101,32 @@ public class userDAO
             String location = resultSet.getString("location"); 
             String howNear = resultSet.getString("howNear"); 
             String clientNote = resultSet.getString("clientNote"); 
-            String accepted = resultSet.getString("accepted"); 
+            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
             String davidNote = resultSet.getString("davidNote"); 
             String price = resultSet.getString("price"); 
+            //  Part 3
+            String workStart = resultSet.getString("workStart");
+            String workEnd = resultSet.getString("workEnd");
+            double billCost = resultSet.getDouble("billCost");
+            String billStatus = resultSet.getString("billStatus");
+            String billGiven = resultSet.getString("billGiven");
+            String billPaid = resultSet.getString("billPaid");
+            String orderCompleted = resultSet.getString("orderCompleted");
+            String treeCutDates = resultSet.getString("treeCutDates");
+            String quoteClientAccept = resultSet.getString("quoteClientAccept");
+            int treesCut = resultSet.getInt("treesCut");
+            int totalTreesCut = resultSet.getInt("totalTreesCut");
+            String easyClient = resultSet.getString("easyClient");
+            //  Credit card info
+            String cardNumber = resultSet.getString("cardNumber");
+            String cardExpiration = resultSet.getString("cardExpiration");
+            String cardSecurityCode = resultSet.getString("cardSecurityCode");
              
-            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, accepted, davidNote, price);
+            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
-        }        
+        }
         resultSet.close();
         disconnect();        
         return listUser;
@@ -145,12 +154,30 @@ public class userDAO
             String location = resultSet.getString("location"); 
             String howNear = resultSet.getString("howNear"); 
             String clientNote = resultSet.getString("clientNote"); 
-            String accepted = resultSet.getString("accepted"); 
+            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
             String davidNote = resultSet.getString("davidNote"); 
             String price = resultSet.getString("price"); 
+            //  Part 3
+            String workStart = resultSet.getString("workStart");
+            String workEnd = resultSet.getString("workEnd");
+            double billCost = resultSet.getDouble("billCost");
+            String billStatus = resultSet.getString("billStatus");
+            String billGiven = resultSet.getString("billGiven");
+            String billPaid = resultSet.getString("billPaid");
+            String orderCompleted = resultSet.getString("orderCompleted");
+            String treeCutDates = resultSet.getString("treeCutDates");
+            String quoteClientAccept = resultSet.getString("quoteClientAccept");
+            int treesCut = resultSet.getInt("treesCut");
+            int totalTreesCut = resultSet.getInt("totalTreesCut");
+            String easyClient = resultSet.getString("easyClient");
+            //  Credit card info
+            String cardNumber = resultSet.getString("cardNumber");
+            String cardExpiration = resultSet.getString("cardExpiration");
+            String cardSecurityCode = resultSet.getString("cardSecurityCode");
              
-            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, accepted, davidNote, price);
+            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
         }        
         resultSet.close();
@@ -167,22 +194,15 @@ public class userDAO
     public void insert(user users) throws SQLException {
     	connect_func("root","pass1234");         
 		String sql = "insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, "
-				+ "clientNote, accepted, davidNote, price) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, "
+				+ "treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, users.getEmail());
 			preparedStatement.setString(2, users.getFirstName());
 			preparedStatement.setString(3, users.getLastName());
 			preparedStatement.setString(4, users.getPassword());
 			preparedStatement.setString(5, users.getBirthday());
-			/** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-			preparedStatement.setString(6, users.getAdress_street_num());		
-			preparedStatement.setString(7, users.getAdress_street());		
-			preparedStatement.setString(8, users.getAdress_city());		
-			preparedStatement.setString(9, users.getAdress_state());		
-			preparedStatement.setString(10, users.getAdress_zip_code());		
-			preparedStatement.setInt(11, users.getCash_bal());		
-			preparedStatement.setInt(12, users.getPPS_bal());	
-			*/
 			preparedStatement.setString(6, users.getRole());
 			preparedStatement.setString(7, users.getPic1());
 			preparedStatement.setString(8, users.getPic2());
@@ -192,9 +212,26 @@ public class userDAO
 			preparedStatement.setString(12, users.getLocation());
 			preparedStatement.setString(13, users.getHowNear());
 			preparedStatement.setString(14, users.getClientNote());
-			preparedStatement.setString(15, users.getAccepted());
+			preparedStatement.setString(15, users.getQuoteDavidAccept());
 			preparedStatement.setString(16, users.getDavidNote());
 			preparedStatement.setString(17, users.getPrice());
+			//  Part 3
+			preparedStatement.setString(18, users.getWorkStart());
+			preparedStatement.setString(19, users.getWorkEnd());
+			preparedStatement.setString(20, users.getBillCost() + "");
+			preparedStatement.setString(21, users.getBillStatus());
+			preparedStatement.setString(22, users.getBillGiven());
+			preparedStatement.setString(23, users.getBillPaid());
+			preparedStatement.setString(24, users.getOrderCompleted());
+			preparedStatement.setString(25, users.getTreeCutDates());
+			preparedStatement.setString(26, users.getQuoteClientAccept());
+			preparedStatement.setString(27, users.getTreesCut() + "");
+			preparedStatement.setString(28, users.getTotalTreesCut() + "");
+			preparedStatement.setString(29, users.getEasyClient());
+			//  Credit card info
+			preparedStatement.setString(30, users.getCardNumber());
+			preparedStatement.setString(31, users.getCardExpiration());
+			preparedStatement.setString(32, users.getCardSecurityCode());
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -214,7 +251,10 @@ public class userDAO
      
     public boolean update(user users) throws SQLException {
         String sql = "update User set firstName=?, lastName =?, password =?, birthday=?, role =?, pic1 =?, pic2 =?, pic3 =?, treeSize =?, treeHeight =?,"
-        		+ "location =?, howNear =?, clientNote =?, accepted =?, davidNote =?, price =? where email = ?";
+        		+ "location =?, howNear =?, clientNote =?, quoteDavidAccept =?, davidNote =?, price =?, workStart =?, workEnd =?, billCost =?, billStatus =?,"
+        		+ "billGiven =?, billPaid =?, orderCompleted =?, treeCutDates =?, quoteClientAccept =?, treesCut =?, totalTreesCut =?, easyClient =?, "
+        		+ "cardNumber =?, cardExpiration =?, cardSecurityCode =? "
+        		+ "where email = ?";
         connect_func();
         
         preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
@@ -232,10 +272,28 @@ public class userDAO
 		preparedStatement.setString(11, users.getLocation());
 		preparedStatement.setString(12, users.getHowNear());
 		preparedStatement.setString(13, users.getClientNote());
-		preparedStatement.setString(14, users.getAccepted());
+		preparedStatement.setString(14, users.getQuoteDavidAccept());
 		preparedStatement.setString(15, users.getDavidNote());
 		preparedStatement.setString(16, users.getPrice());
-		preparedStatement.setString(17, users.getEmail());
+		//  Part 3
+		preparedStatement.setString(17, users.getWorkStart());
+		preparedStatement.setString(18, users.getWorkEnd());
+		preparedStatement.setString(19, users.getBillCost() + "");
+		preparedStatement.setString(20, users.getBillStatus());
+		preparedStatement.setString(21, users.getBillGiven());
+		preparedStatement.setString(22, users.getBillPaid());
+		preparedStatement.setString(23, users.getOrderCompleted());
+		preparedStatement.setString(24, users.getTreeCutDates());
+		preparedStatement.setString(25, users.getQuoteClientAccept());
+		preparedStatement.setString(26, users.getTreesCut() + "");
+		preparedStatement.setString(27, users.getTotalTreesCut() + "");
+		preparedStatement.setString(28, users.getEasyClient());
+		//  Credit card info
+		preparedStatement.setString(29, users.getCardNumber());
+		preparedStatement.setString(30, users.getCardExpiration());
+		preparedStatement.setString(31, users.getCardSecurityCode());
+				
+		preparedStatement.setString(32, users.getEmail());
          
         boolean rowUpdated = preparedStatement.executeUpdate() > 0;
         preparedStatement.close();
@@ -258,15 +316,6 @@ public class userDAO
             String lastName = resultSet.getString("lastName");
             String password = resultSet.getString("password");
             String birthday = resultSet.getString("birthday");
-            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-            String adress_street_num = resultSet.getString("adress_street_num"); 
-            String adress_street = resultSet.getString("adress_street"); 
-            String adress_city = resultSet.getString("adress_city"); 
-            String adress_state = resultSet.getString("adress_state"); 
-            String adress_zip_code = resultSet.getString("adress_zip_code"); 
-            int cash_bal = resultSet.getInt("cash_bal");
-            int PPS_bal = resultSet.getInt("PPS_bal");
-            */
             String role = resultSet.getString("role");
             String pic1 = resultSet.getString("pic1"); 
 	   	 	String pic2 = resultSet.getString("pic2"); 
@@ -276,12 +325,30 @@ public class userDAO
 	   	 	String location = resultSet.getString("location"); 
 	   	 	String howNear = resultSet.getString("howNear"); 
 	   	 	String clientNote = resultSet.getString("clientNote"); 
-	   	 	String accepted = resultSet.getString("accepted");
+	   	 	String quoteDavidAccept = resultSet.getString("quoteDavidAccept");
 	   	 	String davidNote = resultSet.getString("davidNote"); 
 	   	 	String price = resultSet.getString("price"); 
+	   	 	//  Part 3
+            String workStart = resultSet.getString("workStart");
+            String workEnd = resultSet.getString("workEnd");
+            double billCost = resultSet.getDouble("billCost");
+            String billStatus = resultSet.getString("billStatus");
+            String billGiven = resultSet.getString("billGiven");
+            String billPaid = resultSet.getString("billPaid");
+            String orderCompleted = resultSet.getString("orderCompleted");
+            String treeCutDates = resultSet.getString("treeCutDates");
+            String quoteClientAccept = resultSet.getString("quoteClientAccept");
+            int treesCut = resultSet.getInt("treesCut");
+            int totalTreesCut = resultSet.getInt("totalTreesCut");
+            String easyClient = resultSet.getString("easyClient");
+            //  Credit card info
+            String cardNumber = resultSet.getString("cardNumber");
+            String cardExpiration = resultSet.getString("cardExpiration");
+            String cardSecurityCode = resultSet.getString("cardSecurityCode");
             
             user = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, accepted, davidNote, price);
+            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
         }
          
         resultSet.close();
@@ -365,15 +432,6 @@ public class userDAO
 					            "lastName VARCHAR(10) NOT NULL, " +
 					            "password VARCHAR(20) NOT NULL, " +
 					            "birthday DATE NOT NULL, " +
-					            /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-					            "adress_street_num VARCHAR(4) , "+ 
-					            "adress_street VARCHAR(30) , "+ 
-					            "adress_city VARCHAR(20)," + 
-					            "adress_state VARCHAR(2),"+ 
-					            "adress_zip_code VARCHAR(5),"+ 
-					            "cash_bal DECIMAL(13,2) DEFAULT 1000,"+ 
-					            "PPS_bal DECIMAL(13,2) DEFAULT 0,"+
-					            */
 					            "role VARCHAR(20),"+ 
 					            "pic1 VARCHAR(50), "+
 					            "pic2 VARCHAR(50), "+
@@ -383,24 +441,42 @@ public class userDAO
 					            "location VARCHAR(50), "+
 					            "howNear VARCHAR(50), "+
 					            "clientNote VARCHAR(100), "+
-					            "accepted VARCHAR(20), "+
+					            "quoteDavidAccept VARCHAR(20), "+
 					            "davidNote VARCHAR(100), "+
 					            "price VARCHAR(100), "+
+					            //  Part 3
+					            "workStart DATE, " +
+					            "workEnd DATE, " +
+					            "billCost VARCHAR(100), "+
+					            "billStatus VARCHAR(100), "+
+					            "billGiven DATE, " +
+					            "billPaid DATE, " +
+					            "orderCompleted VARCHAR(100), "+
+					            "treeCutDates VARCHAR(100), "+
+					            "quoteClientAccept VARCHAR(100), "+
+					            "treesCut VARCHAR(100), "+
+					            "totalTreesCut VARCHAR(100), "+
+					            "easyClient VARCHAR(100), "+
+					            //  Credit card info
+					            "cardNumber VARCHAR(100), "+
+					            "cardExpiration VARCHAR(100), "+
+					            "cardSecurityCode VARCHAR(100), "+
+					            
 					            "PRIMARY KEY (email) "+"); ")
         					};
-        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, accepted, davidNote, price)"+
-        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '');")
+        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode)"+
+        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
+			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '');")
 			    			};
         
         //for loop to put these in database
