@@ -79,9 +79,79 @@ public class userDAO
         }
     }
     
-    public List<user> listAllUsers() throws SQLException {
+    public List<user> listUser(String type, String email) throws SQLException {
+        List<user> listUser = new ArrayList<user>();  
+        String sql = "SELECT * FROM User";
+        if (type.equals("all"))
+        	sql = "SELECT * FROM User";
+        else if (type.equals("quote"))
+        	sql = "SELECT * FROM User WHERE treeSize != '' AND email = '" + email + "'";
+        else if (type.equals("bill"))
+        	sql = "SELECT * FROM User WHERE billStatus != '' AND email = '" + email + "'";
+        else if (type.equals("order"))
+        	sql = "SELECT * FROM User WHERE orderCompleted != '' AND email = '" + email + "'";
+        
+        connect_func();      
+        statement = (Statement) connect.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        
+        while (resultSet.next()) {
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
+            String password = resultSet.getString("password");
+            String birthday = resultSet.getString("birthday");
+            String role = resultSet.getString("role"); 
+            String pic1 = resultSet.getString("pic1"); 
+            String pic2 = resultSet.getString("pic2"); 
+            String pic3 = resultSet.getString("pic3"); 
+            String treeSize = resultSet.getString("treeSize"); 
+            String treeHeight = resultSet.getString("treeHeight"); 
+            String location = resultSet.getString("location"); 
+            String howNear = resultSet.getString("howNear"); 
+            String clientNote = resultSet.getString("clientNote"); 
+            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
+            String davidNote = resultSet.getString("davidNote"); 
+            String price = resultSet.getString("price"); 
+            //  Part 3
+            String workStart = resultSet.getString("workStart");
+            String workEnd = resultSet.getString("workEnd");
+            String billCost = resultSet.getString("billCost");
+            String billStatus = resultSet.getString("billStatus");
+            String billGiven = resultSet.getString("billGiven");
+            String billPaid = resultSet.getString("billPaid");
+            String orderCompleted = resultSet.getString("orderCompleted");
+            String treeCutDates = resultSet.getString("treeCutDates");
+            String quoteClientAccept = resultSet.getString("quoteClientAccept");
+            int treesCut = resultSet.getInt("treesCut");
+            int totalTreesCut = resultSet.getInt("totalTreesCut");
+            String easyClient = resultSet.getString("easyClient");
+            //  Credit card info
+            String cardNumber = resultSet.getString("cardNumber");
+            String cardExpiration = resultSet.getString("cardExpiration");
+            String cardSecurityCode = resultSet.getString("cardSecurityCode");
+             
+            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            listUser.add(users);
+        }
+        resultSet.close();
+        disconnect();        
+        return listUser;
+    }
+    
+    public List<user> listAllUsers(String type) throws SQLException {
         List<user> listUser = new ArrayList<user>();        
-        String sql = "SELECT * FROM User";      
+        String sql = "SELECT * FROM User";
+        if (type.equals("all"))
+        	sql = "SELECT * FROM User";
+        else if (type.equals("quote"))
+        	sql = "SELECT * FROM User WHERE treeSize != ''";
+        else if (type.equals("bill"))
+        	sql = "SELECT * FROM User WHERE billStatus != ''";
+        else if (type.equals("order"))
+        	sql = "SELECT * FROM User WHERE orderCompleted != ''";
+        
         connect_func();      
         statement = (Statement) connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
@@ -127,217 +197,6 @@ public class userDAO
             		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
         }
-        resultSet.close();
-        disconnect();        
-        return listUser;
-    }
-    
-    public List<user> listQuote(String email) throws SQLException {
-        List<user> listUser = new ArrayList<user>();        
-        String sql = "SELECT * FROM User WHERE treeSize != '' AND email = '" + email + "'";       
-        connect_func();      
-        statement = (Statement) connect.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-         
-        while (resultSet.next()) {
-            //String email = resultSet.getString("email");
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String password = resultSet.getString("password");
-            String birthday = resultSet.getString("birthday");
-            String role = resultSet.getString("role"); 
-            String pic1 = resultSet.getString("pic1"); 
-            String pic2 = resultSet.getString("pic2"); 
-            String pic3 = resultSet.getString("pic3"); 
-            String treeSize = resultSet.getString("treeSize"); 
-            String treeHeight = resultSet.getString("treeHeight"); 
-            String location = resultSet.getString("location"); 
-            String howNear = resultSet.getString("howNear"); 
-            String clientNote = resultSet.getString("clientNote"); 
-            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
-            String davidNote = resultSet.getString("davidNote"); 
-            String price = resultSet.getString("price"); 
-            //  Part 3
-            String workStart = resultSet.getString("workStart");
-            String workEnd = resultSet.getString("workEnd");
-            String billCost = resultSet.getString("billCost");
-            String billStatus = resultSet.getString("billStatus");
-            String billGiven = resultSet.getString("billGiven");
-            String billPaid = resultSet.getString("billPaid");
-            String orderCompleted = resultSet.getString("orderCompleted");
-            String treeCutDates = resultSet.getString("treeCutDates");
-            String quoteClientAccept = resultSet.getString("quoteClientAccept");
-            int treesCut = resultSet.getInt("treesCut");
-            int totalTreesCut = resultSet.getInt("totalTreesCut");
-            String easyClient = resultSet.getString("easyClient");
-            //  Credit card info
-            String cardNumber = resultSet.getString("cardNumber");
-            String cardExpiration = resultSet.getString("cardExpiration");
-            String cardSecurityCode = resultSet.getString("cardSecurityCode");
-             
-            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
-            listUser.add(users);
-        }        
-        resultSet.close();
-        disconnect();        
-        return listUser;
-    }
-    
-    public List<user> listAllQuotes() throws SQLException {
-        List<user> listUser = new ArrayList<user>();        
-        String sql = "SELECT * FROM User WHERE treeSize != ''";      
-        connect_func();      
-        statement = (Statement) connect.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-         
-        while (resultSet.next()) {
-            String email = resultSet.getString("email");
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String password = resultSet.getString("password");
-            String birthday = resultSet.getString("birthday");
-            String role = resultSet.getString("role"); 
-            String pic1 = resultSet.getString("pic1"); 
-            String pic2 = resultSet.getString("pic2"); 
-            String pic3 = resultSet.getString("pic3"); 
-            String treeSize = resultSet.getString("treeSize"); 
-            String treeHeight = resultSet.getString("treeHeight"); 
-            String location = resultSet.getString("location"); 
-            String howNear = resultSet.getString("howNear"); 
-            String clientNote = resultSet.getString("clientNote"); 
-            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
-            String davidNote = resultSet.getString("davidNote"); 
-            String price = resultSet.getString("price"); 
-            //  Part 3
-            String workStart = resultSet.getString("workStart");
-            String workEnd = resultSet.getString("workEnd");
-            String billCost = resultSet.getString("billCost");
-            String billStatus = resultSet.getString("billStatus");
-            String billGiven = resultSet.getString("billGiven");
-            String billPaid = resultSet.getString("billPaid");
-            String orderCompleted = resultSet.getString("orderCompleted");
-            String treeCutDates = resultSet.getString("treeCutDates");
-            String quoteClientAccept = resultSet.getString("quoteClientAccept");
-            int treesCut = resultSet.getInt("treesCut");
-            int totalTreesCut = resultSet.getInt("totalTreesCut");
-            String easyClient = resultSet.getString("easyClient");
-            //  Credit card info
-            String cardNumber = resultSet.getString("cardNumber");
-            String cardExpiration = resultSet.getString("cardExpiration");
-            String cardSecurityCode = resultSet.getString("cardSecurityCode");
-             
-            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
-            listUser.add(users);
-        }        
-        resultSet.close();
-        disconnect();        
-        return listUser;
-    }
-    
-    public List<user> listBill(String email) throws SQLException {
-        List<user> listUser = new ArrayList<user>();        
-        String sql = "SELECT * FROM User WHERE billStatus != '' AND email = '" + email + "'";
-        connect_func();      
-        statement = (Statement) connect.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-         
-        while (resultSet.next()) {
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String password = resultSet.getString("password");
-            String birthday = resultSet.getString("birthday");
-            String role = resultSet.getString("role"); 
-            String pic1 = resultSet.getString("pic1"); 
-            String pic2 = resultSet.getString("pic2"); 
-            String pic3 = resultSet.getString("pic3"); 
-            String treeSize = resultSet.getString("treeSize"); 
-            String treeHeight = resultSet.getString("treeHeight"); 
-            String location = resultSet.getString("location"); 
-            String howNear = resultSet.getString("howNear"); 
-            String clientNote = resultSet.getString("clientNote"); 
-            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
-            String davidNote = resultSet.getString("davidNote"); 
-            String price = resultSet.getString("price"); 
-            //  Part 3
-            String workStart = resultSet.getString("workStart");
-            String workEnd = resultSet.getString("workEnd");
-            String billCost = resultSet.getString("billCost");
-            String billStatus = resultSet.getString("billStatus");
-            String billGiven = resultSet.getString("billGiven");
-            String billPaid = resultSet.getString("billPaid");
-            String orderCompleted = resultSet.getString("orderCompleted");
-            String treeCutDates = resultSet.getString("treeCutDates");
-            String quoteClientAccept = resultSet.getString("quoteClientAccept");
-            int treesCut = resultSet.getInt("treesCut");
-            int totalTreesCut = resultSet.getInt("totalTreesCut");
-            String easyClient = resultSet.getString("easyClient");
-            //  Credit card info
-            String cardNumber = resultSet.getString("cardNumber");
-            String cardExpiration = resultSet.getString("cardExpiration");
-            String cardSecurityCode = resultSet.getString("cardSecurityCode");
-             
-            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
-            listUser.add(users);
-        }        
-        resultSet.close();
-        disconnect();        
-        return listUser;
-    }
-    
-    public List<user> listAllBills() throws SQLException {
-        List<user> listUser = new ArrayList<user>();        
-        String sql = "SELECT * FROM User WHERE billStatus != ''";      
-        connect_func();      
-        statement = (Statement) connect.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-         
-        while (resultSet.next()) {
-            String email = resultSet.getString("email");
-            String firstName = resultSet.getString("firstName");
-            String lastName = resultSet.getString("lastName");
-            String password = resultSet.getString("password");
-            String birthday = resultSet.getString("birthday");
-            String role = resultSet.getString("role"); 
-            String pic1 = resultSet.getString("pic1"); 
-            String pic2 = resultSet.getString("pic2"); 
-            String pic3 = resultSet.getString("pic3"); 
-            String treeSize = resultSet.getString("treeSize"); 
-            String treeHeight = resultSet.getString("treeHeight"); 
-            String location = resultSet.getString("location"); 
-            String howNear = resultSet.getString("howNear"); 
-            String clientNote = resultSet.getString("clientNote"); 
-            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
-            String davidNote = resultSet.getString("davidNote"); 
-            String price = resultSet.getString("price"); 
-            //  Part 3
-            String workStart = resultSet.getString("workStart");
-            String workEnd = resultSet.getString("workEnd");
-            String billCost = resultSet.getString("billCost");
-            String billStatus = resultSet.getString("billStatus");
-            String billGiven = resultSet.getString("billGiven");
-            String billPaid = resultSet.getString("billPaid");
-            String orderCompleted = resultSet.getString("orderCompleted");
-            String treeCutDates = resultSet.getString("treeCutDates");
-            String quoteClientAccept = resultSet.getString("quoteClientAccept");
-            int treesCut = resultSet.getInt("treesCut");
-            int totalTreesCut = resultSet.getInt("totalTreesCut");
-            String easyClient = resultSet.getString("easyClient");
-            //  Credit card info
-            String cardNumber = resultSet.getString("cardNumber");
-            String cardExpiration = resultSet.getString("cardExpiration");
-            String cardSecurityCode = resultSet.getString("cardSecurityCode");
-             
-            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
-            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
-            listUser.add(users);
-        }        
         resultSet.close();
         disconnect();        
         return listUser;

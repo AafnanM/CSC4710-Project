@@ -257,6 +257,41 @@
 			
 			<!-- VIEW ORDER STATUS -->
 			
+			<br>
+	 		<table border="1" cellpadding="6">
+            	<caption><h2>Your Order</h2></caption>
+            	<tr>
+	                <th>Email</th>
+	                <th>First name</th>
+	                <th>Last name</th>
+	                <th>Picture 1</th>
+	                <th>Picture 2</th>
+	                <th>Picture 3</th>
+	                <th>Tree size</th>
+	                <th>Tree height</th>
+	                <th>Tree location</th>
+	                <th>How near</th>
+	                <th>Projected work start</th>
+	                <th>Projected work finish</th>
+	                <th>Order status</th>
+            	</tr>
+            	<c:forEach var="users" items="${listOrder}">
+	                <tr style="text-align:center">
+	                    <td><c:out value="${users.email}" /></td>
+	                    <td><c:out value="${users.firstName}" /></td>
+	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.pic1}" /></td>
+	                    <td><c:out value="${users.pic2}" /></td>
+	                    <td><c:out value="${users.pic3}" /></td>
+	                    <td><c:out value="${users.treeSize}" /></td>
+	                    <td><c:out value="${users.treeHeight}" /></td>
+	                    <td><c:out value="${users.location}" /></td>
+	                    <td><c:out value="${users.howNear}" /></td>
+	                    <td><c:out value="${users.workStart}" /></td>
+	                    <td><c:out value="${users.workEnd}" /></td>
+	                    <td><c:out value="${users.orderCompleted}" /></td>
+	            </c:forEach>
+        	</table>
 	 	</div>
 	</body>
 </html>

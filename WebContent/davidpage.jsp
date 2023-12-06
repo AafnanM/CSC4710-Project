@@ -67,7 +67,7 @@
         	<!-- RESPOND TO A QUOTE -->
         	<form action="davidQuoteRespond">
         		<table>
-        			<caption><h2>Respond to a Quote</h2></caption>
+        			<caption><h3>Quote Dashboard</h3></caption>
         			<tr>
 						<th>Enter email of client: </th>
 						<td align="center" colspan="3">
@@ -114,7 +114,7 @@
         	<!-- CANCEL A QUOTE -->
         	<form action="davidQuoteCancel">
         		<table>
-        			<caption><h2>Cancel a Quote</h2></caption>
+        			<caption><h3>Cancel a Quote</h3></caption>
         			<tr>
 						<th>Enter email of client: </th>
 						<td align="center" colspan="3">
@@ -128,10 +128,50 @@
 					</tr>
         		</table>
         	</form>
+        	
+        	<!-- BILL DASHBOARD -->
+        	
+        	<br>
+        	<table border="1" cellpadding="6">
+            	<caption><h2>Bill Dashboard</h2></caption>
+            	<tr>
+	                <th>Email</th>
+	                <th>First name</th>
+	                <th>Last name</th>
+	                <th>Credit Card Number</th>
+	                <th>Card Expiration Date</th>
+	                <th>Card Security Code</th>
+	                <th>Quote Price</th>                
+	                <th>Bill Cost</th>
+	                <th>Bill Status</th>
+	                <th>Bill Issue Date</th>
+	                <th>Bill Payment Date</th>
+	                <th>Client's note</th>
+	                <th>David's note</th>
+            	</tr>
+            	<c:forEach var="users" items="${listBill}">
+	                <tr style="text-align:center">
+	                    <td><c:out value="${users.email}" /></td>
+	                    <td><c:out value="${users.firstName}" /></td>
+	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.cardNumber}" /></td>
+	                    <td><c:out value="${users.cardExpiration}" /></td>
+	                    <td><c:out value="${users.cardSecurityCode}" /></td>
+	                    <td><c:out value="${users.price}" /></td>
+	                    <td><c:out value="${users.billCost}" /></td>
+	                    <td><c:out value="${users.billStatus}" /></td>
+	                    <td><c:out value="${users.billGiven}" /></td>
+	                    <td><c:out value="${users.billPaid}" /></td>
+	                    <td><c:out value="${users.clientNote}" /></td>
+	                    <td><c:out value="${users.davidNote}" /></td>
+	            </c:forEach>
+        	</table>        	
+        	<br>
+        	<p> ${errorTwo } </p>
         	<!-- ISSUE A BILL -->
         	<form action="davidBillSubmit">
         		<table>
-        			<caption><h2>Issue a Bill</h2></caption>
+        			<caption><h3>Issue a Bill</h3></caption>
         			<tr>
 						<th>Enter email of client: </th>
 						<td align="center" colspan="3">
@@ -165,41 +205,41 @@
         		</table>
         	</form>
         	
-        	<!-- BILL DASHBOARD -->
+        	<!-- ORDER DASHBOARD -->
         	
         	<br>
-        	<table border="1" cellpadding="6">
-            	<caption><h2>List of Bills</h2></caption>
+	 		<table border="1" cellpadding="6">
+            	<caption><h2>Order Dashboard</h2></caption>
             	<tr>
 	                <th>Email</th>
 	                <th>First name</th>
 	                <th>Last name</th>
-	                <th>Credit Card Number</th>
-	                <th>Card Expiration Date</th>
-	                <th>Card Security Code</th>
-	                <th>Quote Price</th>                
-	                <th>Bill Cost</th>
-	                <th>Bill Status</th>
-	                <th>Bill Issue Date</th>
-	                <th>Bill Payment Date</th>
-	                <th>Client's note</th>
-	                <th>David's note</th>
+	                <th>Picture 1</th>
+	                <th>Picture 2</th>
+	                <th>Picture 3</th>
+	                <th>Tree size</th>
+	                <th>Tree height</th>
+	                <th>Tree location</th>
+	                <th>How near</th>
+	                <th>Projected work start</th>
+	                <th>Projected work finish</th>
+	                <th>Order status</th>
             	</tr>
-            	<c:forEach var="users" items="${listBill}">
+            	<c:forEach var="users" items="${listOrder}">
 	                <tr style="text-align:center">
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
 	                    <td><c:out value="${users.lastName}" /></td>
-	                    <td><c:out value="${users.cardNumber}" /></td>
-	                    <td><c:out value="${users.cardExpiration}" /></td>
-	                    <td><c:out value="${users.cardSecurityCode}" /></td>
-	                    <td><c:out value="${users.price}" /></td>
-	                    <td><c:out value="${users.billCost}" /></td>
-	                    <td><c:out value="${users.billStatus}" /></td>
-	                    <td><c:out value="${users.billGiven}" /></td>
-	                    <td><c:out value="${users.billPaid}" /></td>
-	                    <td><c:out value="${users.clientNote}" /></td>
-	                    <td><c:out value="${users.davidNote}" /></td>
+	                    <td><c:out value="${users.pic1}" /></td>
+	                    <td><c:out value="${users.pic2}" /></td>
+	                    <td><c:out value="${users.pic3}" /></td>
+	                    <td><c:out value="${users.treeSize}" /></td>
+	                    <td><c:out value="${users.treeHeight}" /></td>
+	                    <td><c:out value="${users.location}" /></td>
+	                    <td><c:out value="${users.howNear}" /></td>
+	                    <td><c:out value="${users.workStart}" /></td>
+	                    <td><c:out value="${users.workEnd}" /></td>
+	                    <td><c:out value="${users.orderCompleted}" /></td>
 	            </c:forEach>
         	</table>
         </div>

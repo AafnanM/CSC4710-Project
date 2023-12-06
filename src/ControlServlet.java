@@ -107,7 +107,7 @@ public class ControlServlet extends HttpServlet {
 	        System.out.println("listUser started: 00000000000000000000000000000000000");
 
 	     
-	        List<user> listUser = userDAO.listAllUsers();
+	        List<user> listUser = userDAO.listAllUsers("all");
 	        request.setAttribute("listUser", listUser);       
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("UserList.jsp");       
 	        dispatcher.forward(request, response);
@@ -117,14 +117,14 @@ public class ControlServlet extends HttpServlet {
 	    	        
 	    private void rootPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
 	    	System.out.println("root view");
-			request.setAttribute("listUser", userDAO.listAllUsers());
+			request.setAttribute("listUser", userDAO.listAllUsers("all"));
 	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
 	    }
 	    
 	    private void davidPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
 	    	System.out.println("David view");
-			request.setAttribute("listQuote", userDAO.listAllQuotes());
-			request.setAttribute("listBill", userDAO.listAllBills());
+			request.setAttribute("listQuote", userDAO.listAllUsers("quote"));
+			request.setAttribute("listBill", userDAO.listAllUsers("bill"));
 	    	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
 	    
@@ -148,8 +148,8 @@ public class ControlServlet extends HttpServlet {
 	    	 { 
 			 	 currentUser = email;
 				 System.out.println("Login Successful! Redirecting");
-				 request.setAttribute("listQuote", userDAO.listQuote(email));
-				 request.setAttribute("listBill", userDAO.listBill(email));
+				 request.setAttribute("listQuote", userDAO.listUser("quote", email));
+				 request.setAttribute("listBill", userDAO.listUser("bill", email));
 				 request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 			 			 			 			 
 	    	 }
@@ -263,8 +263,8 @@ public class ControlServlet extends HttpServlet {
             		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 		 	userDAO.update(updatedUser);
 		 	//response.sendRedirect("login.jsp");
-		 	request.setAttribute("listQuote", userDAO.listQuote(email));
-		 	request.setAttribute("listBill", userDAO.listBill(email));
+		 	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
     		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
@@ -313,9 +313,6 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listQuote(email));
-			 	request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
 	    	else {
 	    		if (!users.getQuoteDavidAccept().equals("Accepted")) {
@@ -326,10 +323,10 @@ public class ControlServlet extends HttpServlet {
 	    			System.out.println("Response failed, User already accepted the quote");
 		    		request.setAttribute("errorOne","Response failed: You already accepted the quote.");
 	    		}
-	    		request.setAttribute("listQuote", userDAO.listQuote(email));
-	    		request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
+	    	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
+    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
 	    private void clientQuoteCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -376,8 +373,8 @@ public class ControlServlet extends HttpServlet {
 	         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
             		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 		 	userDAO.update(updatedUser);
-		 	request.setAttribute("listQuote", userDAO.listQuote(email));
-		 	request.setAttribute("listBill", userDAO.listBill(email));
+		 	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
     		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
@@ -426,17 +423,14 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listQuote(email));
-			 	request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
 	    	else {
 	    		System.out.println("Negotiation failed, both parties already accepted the quote");
 	    		request.setAttribute("errorOne","Negotiation failed: Both parties already accepted the quote.");
-	    		request.setAttribute("listQuote", userDAO.listQuote(email));
-	    		request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
+	    	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
+    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
 	    private void clientBillAccept(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -467,7 +461,7 @@ public class ControlServlet extends HttpServlet {
 		   	 	String billStatus = "Paid";
 		   	 	String billGiven = users.getBillGiven();
 		   	 	String billPaid = request.getParameter("billPaid");
-		   	 	String orderCompleted = users.getOrderCompleted();
+		   	 	String orderCompleted = "Incomplete";
 		   	 	String treeCutDates = users.getTreeCutDates();
 		   	 	String quoteClientAccept = users.getQuoteClientAccept();
 		   	 	int treesCut = users.getTreesCut();
@@ -484,17 +478,14 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listQuote(email));
-			 	request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
 	    	else {
 	    		System.out.println("Response failed, bill has not been issued");
 	    		request.setAttribute("errorTwo","Negotiation failed: Bill has not been issued.");
-	    		request.setAttribute("listQuote", userDAO.listQuote(email));
-	    		request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
+	    	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
+    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
 	    private void clientBillDecline(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -542,9 +533,6 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listQuote(email));
-			 	request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
 	    	else {
 	    		if (users.getBillGiven().equals("")) {
@@ -555,10 +543,10 @@ public class ControlServlet extends HttpServlet {
 	    			System.out.println("Bill response failed, bill has already been paid");
 		    		request.setAttribute("errorTwo","Bill response failed: Bill has already been paid.");
 	    		}
-	    		request.setAttribute("listQuote", userDAO.listQuote(email));
-	    		request.setAttribute("listBill", userDAO.listBill(email));
-	    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    	}
+	    	request.setAttribute("listQuote", userDAO.listUser("quote", email));
+		 	request.setAttribute("listBill", userDAO.listUser("bill", email));
+    		request.getRequestDispatcher("activitypage.jsp").forward(request, response);
 	    }
 	    
 	    private void davidQuoteSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -605,17 +593,17 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listAllQuotes());
-			 	request.setAttribute("listBill", userDAO.listAllBills());
+			 	request.setAttribute("listQuote", userDAO.listAllUsers("quote"));
+			 	request.setAttribute("listBill", userDAO.listAllUsers("bill"));
 	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
 	   	 	else {
 	   	 		System.out.println("Response failed, enter a valid email to respond to");
 	    		request.setAttribute("errorOne","Response failed: Enter a valid email to respond to.");
-	    		request.setAttribute("listQuote", userDAO.listAllQuotes());
-	    		request.setAttribute("listBill", userDAO.listAllBills());
-	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
+	   	 	request.setAttribute("listQuote", userDAO.listAllUsers("quote"));
+		 	request.setAttribute("listBill", userDAO.listAllUsers("bill"));
+		 	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
 	    
 	    private void davidQuoteCancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -663,17 +651,14 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listAllQuotes());
-			 	request.setAttribute("listBill", userDAO.listAllBills());
-	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
 	   	 	else {
 		   	 	System.out.println("Cancellation failed, enter a valid email to respond to");
 		    	request.setAttribute("errorOne","Cancellation failed: Enter a valid email to respond to.");
-	    		request.setAttribute("listQuote", userDAO.listAllQuotes());
-	    		request.setAttribute("listBill", userDAO.listAllBills());
-	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
+	   	 	request.setAttribute("listQuote", userDAO.listAllUsers("quote"));
+		 	request.setAttribute("listBill", userDAO.listAllUsers("bill"));
+		 	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
 	    
 	    private void davidBillSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -721,23 +706,20 @@ public class ControlServlet extends HttpServlet {
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
 	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
 			 	userDAO.update(updatedUser);
-			 	request.setAttribute("listQuote", userDAO.listAllQuotes());
-			 	request.setAttribute("listBill", userDAO.listAllBills());
-	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
 	   	 	else {
 	   	 		if (!userDAO.checkEmail(email)) {
 			   	 	System.out.println("Submission failed, enter a valid email to respond to");
-		    		request.setAttribute("errorOne","Submission failed: Enter a valid email to respond to.");
+		    		request.setAttribute("errorTwo","Submission failed: Enter a valid email to respond to.");
 	   	 		}
 	   	 		else if (userDAO.checkEmail(email) && users.getQuoteClientAccept() != "Accepted") {
 		   	 		System.out.println("Submission failed, user did not accept their quote yet");
-		    		request.setAttribute("errorOne","Submission failed: User did not accept their quote yet.");
+		    		request.setAttribute("errorTwo","Submission failed: User did not accept their quote yet.");
 	   	 		}
-	    		request.setAttribute("listQuote", userDAO.listAllQuotes());
-	    		request.setAttribute("listBill", userDAO.listAllBills());
-	    		request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	   	 	}
+	   	 	request.setAttribute("listQuote", userDAO.listAllUsers("quote"));
+		 	request.setAttribute("listBill", userDAO.listAllUsers("bill"));
+		 	request.getRequestDispatcher("davidpage.jsp").forward(request, response);
 	    }
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
