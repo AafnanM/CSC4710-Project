@@ -64,7 +64,6 @@
         	</table>
         	<br>
         	<p> ${errorOne } </p>
-        	<p> ${errorTwo } </p>
         	<!-- RESPOND TO A QUOTE -->
         	<form action="davidQuoteRespond">
         		<table>
@@ -130,7 +129,7 @@
         		</table>
         	</form>
         	<!-- ISSUE A BILL -->
-        	<form action="davidQuoteCancel">
+        	<form action="davidBillSubmit">
         		<table>
         			<caption><h2>Issue a Bill</h2></caption>
         			<tr>
@@ -186,7 +185,7 @@
 	                <th>Client's note</th>
 	                <th>David's note</th>
             	</tr>
-            	<c:forEach var="users" items="${listQuote}">
+            	<c:forEach var="users" items="${listBill}">
 	                <tr style="text-align:center">
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
