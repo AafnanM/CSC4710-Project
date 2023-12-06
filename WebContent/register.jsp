@@ -55,6 +55,27 @@
 				
 				</tr>
 				<tr>
+					<th>Credit Card Number: </th>
+					<td align="center" colspan="3">
+						<input type="text" name="cardNumber" size="45" value="XXXX XXXX XXXX XXXX" onfocus="this.value=''">
+					</td>
+				
+				</tr>
+				<tr>
+					<th>Card Expiration Date: </th>
+					<td align="center" colspan="3">
+						<input type="text" name="cardExpiration" size="45" value="MM/YY" onfocus="this.value=''">
+					</td>
+				
+				</tr>
+				<tr>
+					<th>Card Security Code: </th>
+					<td align="center" colspan="3">
+						<input type="text" name="cardSecurityCode" size="45" value="XXX" onfocus="this.value=''">
+					</td>
+				
+				</tr>
+				<tr>
 					<td align="center" colspan="5">
 						<input type="submit" value="Register"/>
 					</td>

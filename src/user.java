@@ -21,7 +21,7 @@ public class user
 	    //  Part 3
 	    protected String workStart;
 	    protected String workEnd;
-	    protected double billCost;
+	    protected String billCost;
 	    protected String billStatus;
 	    protected String billGiven;
 	    protected String billPaid;
@@ -47,7 +47,7 @@ public class user
 	    
 	    public user(String email,String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, 
 	    		String treeSize, String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, 
-	    		String price, String workStart, String workEnd, double billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
+	    		String price, String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
 	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, String cardNumber, 
 	    		String cardExpiration, String cardSecurityCode) 
 	    {
@@ -60,7 +60,7 @@ public class user
 	
 	    public user(String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, String treeSize, 
 	    		String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, String price, 
-	    		String workStart, String workEnd, double billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
+	    		String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
 	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, String cardNumber, String cardExpiration, 
 	    		String cardSecurityCode) 
 	    {
@@ -221,10 +221,10 @@ public class user
 	    public void setWorkEnd(String workEnd) {
 	    	this.workEnd = workEnd;
 	    }
-	    public double getBillCost() {
+	    public String getBillCost() {
 	    	return billCost;
 	    }
-	    public void setBillCost(double billCost) {
+	    public void setBillCost(String billCost) {
 	    	this.billCost = billCost;
 	    }
 	    public String getBillStatus() {
