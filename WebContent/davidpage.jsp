@@ -197,7 +197,6 @@
 						</td>
 					</tr>
 					<tr>
-					<tr>
 						<td align="center" colspan="5">
 							<input type="submit" value="Submit"/>
 						</td>
@@ -224,6 +223,7 @@
 	                <th>Projected work start</th>
 	                <th>Projected work finish</th>
 	                <th>Order status</th>
+	                <th>Tree cut dates</th>
             	</tr>
             	<c:forEach var="users" items="${listOrder}">
 	                <tr style="text-align:center">
@@ -240,8 +240,86 @@
 	                    <td><c:out value="${users.workStart}" /></td>
 	                    <td><c:out value="${users.workEnd}" /></td>
 	                    <td><c:out value="${users.orderCompleted}" /></td>
+	                    <td><c:out value="${users.treeCutDates}" /></td>
 	            </c:forEach>
         	</table>
+        	<br>
+        	<p> ${errorThree } </p>
+        	<!-- COMPLETE AN ORDER -->
+        	<form action="davidOrderComplete">
+        		<table>
+        			<caption><h3>Complete an Order</h3></caption>
+        			<tr>
+						<th>Enter email of client: </th>
+						<td align="center" colspan="3">
+							<input type="text" name="email" size="45"  value="example@gmail.com" onfocus="this.value=''">
+						</td>
+					</tr>
+					<tr>
+						<th>Tree cut dates: </th>
+						<td align="center" colspan="3">
+							<textarea id="text" rows="4" cols="43" name="treeCutDates" placeholder="Enter when each tree was cut" onfocus="this.value=''"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="5">
+							<input type="submit" value="Submit"/>
+						</td>
+					</tr>
+        		</table>
+        	</form>
+        	
+        	<!-- REVENUE REPORT -->
+        	
+        	<br>
+	 		<table border="1" cellpadding="6">
+            	<caption><h2>Revenue Report</h2></caption>
+            	<tr>
+	                <th>Bill payment date</th>
+	                <th>Bill cost</th>
+	                <th>Email</th>
+	                <th>First name</th>
+	                <th>Last name</th>
+	                <th>Projected work start</th>
+	                <th>Projected work finish</th>
+	                <th>Order status</th>
+            	</tr>
+            	<c:forEach var="users" items="${listRevenue}">
+	                <tr style="text-align:center">
+	                	<td><c:out value="${users.billPaid}" /></td>
+	                	<td><c:out value="${users.billCost}" /></td>
+	                    <td><c:out value="${users.email}" /></td>
+	                    <td><c:out value="${users.firstName}" /></td>
+	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.workStart}" /></td>
+	                    <td><c:out value="${users.workEnd}" /></td>
+	                    <td><c:out value="${users.orderCompleted}" /></td>
+	            </c:forEach>
+        	</table>
+        	<br>
+        	<!-- Enter dates for bill payment -->
+        	<form action="davidRevenueReport">
+        		<table>
+        			<caption>Enter Revenue Period</caption>
+        			<tr>
+						<th>Start date: </th>
+						<td align="center" colspan="3">
+							<input type="text" name="revenueStart" size="45"  value="YYYY-MM-DD" onfocus="this.value=''">
+						</td>
+					</tr>
+					<tr>
+						<th>End date: </th>
+						<td align="center" colspan="3">
+							<input type="text" name="revenueEnd" size="45"  value="YYYY-MM-DD" onfocus="this.value=''">
+						</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="5">
+							<input type="submit" value="Generate Revenue Report"/>
+						</td>
+					</tr>
+        		</table>
+        	</form>
         </div>
 	</body>
 </html>

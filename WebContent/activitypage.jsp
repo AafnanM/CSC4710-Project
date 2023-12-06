@@ -274,6 +274,7 @@
 	                <th>Projected work start</th>
 	                <th>Projected work finish</th>
 	                <th>Order status</th>
+	                <th>Tree cut dates</th>
             	</tr>
             	<c:forEach var="users" items="${listOrder}">
 	                <tr style="text-align:center">
@@ -290,8 +291,10 @@
 	                    <td><c:out value="${users.workStart}" /></td>
 	                    <td><c:out value="${users.workEnd}" /></td>
 	                    <td><c:out value="${users.orderCompleted}" /></td>
+	                    <td><c:out value="${users.treeCutDates}" /></td>
 	            </c:forEach>
         	</table>
+        	<br><br>
 	 	</div>
 	</body>
 </html>
