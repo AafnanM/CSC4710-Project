@@ -12,14 +12,18 @@
 
 ## Contributions
 ### Aafnan Mahmood
-- Time spent working together: ~4 hours.
+- Time spent working together: ~20 hours.
 - Created Github repository and pushed pre-existing code.
 - Added roles for David Smith, Admin root, and client to the database and during the registration process. Also modified existing methods to support the change.
-- Added multiple database entries based on the required fields needed for David's page and the client's page. Also modified existing methods to support the change.
+- Added multiple database columns based on the requirements for Part 2 of the project. Also modified existing methods to support the change.
 - Added functionality for David's page and the client's page so that quote requests can be submitted by clients and responded to by David.
-- Added to jsp code for activityPage and davidPage.
+- Added multiple database columns based on the requirements for Part 3 of the project. Also modified existing methods to support the change.
+- Added all remaining functionality to David's page to allow him to manage quotes, send and manage outgoing bills, and list orders as completed. Also modified jsp file accordingly.
+- Added all remaining functionality to the Client's page to allow them to resubmit quote requests, manage incoming bills, and view order status. Also modified jsp file accordingly.
+- Added all remaining functionality to the Root page for viewing of various client statistics (easy clients, most trees cut, etc). Also modified jsp file accordingly.
+- Updated registration page to include a user's card information.
 ### Chalana Weerawardana
 - Time spent working together: ~4 hours.
-- Created the E-R diagram for the system.
+- Created an E-R diagram for the system.
 - Wrote a set of CREATE TABLE statements based on the E-R diagram.
-- Wrote html code for activityPage and davidPage.
+- Created and wrote html files for activityPage and davidPage based on requirements for Part 2 of the project.
