@@ -5,15 +5,7 @@ public class user
 	    protected String firstName;
 	    protected String lastName;
 	    protected String birthday;
-	    /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-	    protected String adress_street_num;
-	    protected String adress_street;
-	    protected String adress_city;
-	    protected String adress_state;
-	    protected String adress_zip_code;
-	    protected int cash_bal;
-	    protected int PPS_bal;
-	    */
+	    //  Part 1 & 2
 	    protected String role;
 	    protected String pic1;
 	    protected String pic2;
@@ -23,9 +15,28 @@ public class user
 	    protected String location;
 	    protected String howNear;
 	    protected String clientNote;
-	    protected String accepted;
+	    protected String quoteDavidAccept;
 	    protected String davidNote;
 	    protected String price;
+	    //  Part 3
+	    protected String workStart;
+	    protected String workEnd;
+	    protected String billCost;
+	    protected String billStatus;
+	    protected String billGiven;
+	    protected String billPaid;
+	    protected String orderCompleted;
+	    protected String treeCutDates;
+	    protected String quoteClientAccept;
+	    protected int treesCut;
+	    protected int totalTreesCut;
+	    protected String easyClient;
+	    protected int amountDue;
+	    protected int amountPaid;
+	    //  Credit card info
+	    protected String cardNumber;
+	    protected String cardExpiration;
+	    protected String cardSecurityCode;
 	 
 	    //constructors
 	    public user() {
@@ -37,30 +48,28 @@ public class user
 	    }
 	    
 	    public user(String email,String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, 
-	    		String treeSize, String treeHeight, String location, String howNear, String clientNote, String accepted, String davidNote, String price) 
+	    		String treeSize, String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, 
+	    		String price, String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
+	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, int amountDue, int amoundPaid, 
+	    		String cardNumber, String cardExpiration, String cardSecurityCode) 
 	    {
-	    	this(firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, accepted, 
-	    			davidNote, price);
+	    	this(firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, 
+	    			davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept,
+	    			treesCut, totalTreesCut, easyClient, amountDue, amoundPaid, cardNumber, cardExpiration, cardSecurityCode);
 	    	this.email = email;
 	    }
 	 
 	
 	    public user(String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, String treeSize, 
-	    		String treeHeight, String location, String howNear, String clientNote, String accepted, String davidNote, String price) 
+	    		String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, String price, 
+	    		String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
+	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, int amountDue, int amoundPaid, 
+	    		String cardNumber, String cardExpiration, String cardSecurityCode) 
 	    {
 	    	this.firstName = firstName;
 	    	this.lastName = lastName;
 	    	this.password = password;
 	        this.birthday = birthday;
-	        /**
-	        this.adress_street_num = adress_street_num;
-	        this.adress_street = adress_street;
-	        this.adress_city= adress_city;
-	        this.adress_state = adress_state;
-	        this.adress_zip_code = adress_zip_code;
-	        this.cash_bal = cash_bal;
-	        this.PPS_bal = PPS_bal;
-	        */
 	        this.role = role;
 	        this.pic1 = pic1;
 	        this.pic2 = pic2;
@@ -70,9 +79,26 @@ public class user
 	        this.location = location;
 	        this.howNear = howNear;
 	        this.clientNote = clientNote;
-	        this.accepted = accepted;
+	        this.quoteDavidAccept = quoteDavidAccept;
 	        this.davidNote = davidNote;
 	        this.price = price;
+	        this.workStart = workStart;
+	        this.workEnd = workEnd;
+	        this.billCost = billCost;
+	        this.billStatus = billStatus;
+	        this.billGiven = billGiven;
+	        this.billPaid = billPaid;
+	        this.orderCompleted = orderCompleted;
+	        this.treeCutDates = treeCutDates;
+	        this.quoteClientAccept = quoteClientAccept;
+	        this.treesCut = treesCut;
+	        this.totalTreesCut = totalTreesCut;
+	        this.amountDue = amountDue;
+	        this.amountPaid = amoundPaid;
+	        this.easyClient = easyClient;
+	        this.cardNumber = cardNumber;
+	        this.cardExpiration = cardExpiration;
+	        this.cardSecurityCode = cardSecurityCode;
 	    }
 	    
 	   //getter and setter methods
@@ -110,53 +136,7 @@ public class user
 	    public void setBirthday(String birthday) {
 	    	this.birthday = birthday;
 	    }
-	    
-	    /** OLD FIELDS FOR USER (ADDRESS, BALANCE, PPL_BAL)
-	    public String getAdress_street_num() {
-	        return adress_street_num;
-	    }
-	    public void setAdress_street_num(String adress_street_num) {
-	        this.adress_street_num = adress_street_num;
-	    }
-	    public String getAdress_street() {
-	        return adress_street;
-	    }
-	    public void setAdress_street(String adress_street) {
-	        this.adress_street = adress_street;
-	    }
-	    public String getAdress_city() {
-	        return adress_city;
-	    }
-	    public void setAdress_city(String adress_city) {
-	        this.adress_city = adress_city;
-	    }
-	    public String getAdress_state() {
-	        return adress_state;
-	    }
-	    public void setAdress_state(String adress_state) {
-	        this.adress_state = adress_state;
-	    }
-	    public String getAdress_zip_code() {
-	        return adress_zip_code;
-	    }
-	    public void setAdress_zip_code(String adress_zip_code) {
-	        this.adress_zip_code = adress_zip_code;
-	    }
-	    
-	    public int getCash_bal() {
-	    	return cash_bal;
-	    }
-	    public void setCash_bal(int cash_bal) {
-	    	this.cash_bal = cash_bal;
-	    }
-	    
-	    public int getPPS_bal() {
-	    	return PPS_bal;
-	    }
-	    public void setPPS_bal(int PPS_bal) {
-	    	this.PPS_bal = PPS_bal;
-	    }
-	    */
+	  
 	    
 	    public String getRole() {
 	        return role;
@@ -213,11 +193,11 @@ public class user
 	    public void setClientNote(String clientNote) {
 	        this.clientNote = clientNote;
 	    }
-	    public String getAccepted() {
-	        return accepted;
+	    public String getQuoteDavidAccept() {
+	        return quoteDavidAccept;
 	    }
-	    public void setAccepted(String accepted) {
-	        this.accepted = accepted;
+	    public void setQuoteDavidAccept(String quoteDavidAccept) {
+	        this.quoteDavidAccept = quoteDavidAccept;
 	    }
 	    public String getDavidNote() {
 	        return davidNote;
@@ -230,5 +210,111 @@ public class user
 	    }
 	    public void setPrice(String price) {
 	        this.price = price;
+	    }
+	    
+	    //  Part 3
+	    public String getWorkStart() {
+	    	return workStart;
+	    }
+	    public void setWorkStart(String workStart) {
+	    	this.workStart = workStart;
+	    }
+	    public String getWorkEnd() {
+	    	return workEnd;
+	    }
+	    public void setWorkEnd(String workEnd) {
+	    	this.workEnd = workEnd;
+	    }
+	    public String getBillCost() {
+	    	return billCost;
+	    }
+	    public void setBillCost(String billCost) {
+	    	this.billCost = billCost;
+	    }
+	    public String getBillStatus() {
+	    	return billStatus;
+	    }
+	    public void setBillStatus(String billStatus) {
+	    	this.billStatus = billStatus;
+	    }
+	    public String getBillGiven() {
+	    	return billGiven;
+	    }
+	    public void setBillGiven(String billGiven) {
+	    	this.billGiven = billGiven;
+	    }
+	    public String getBillPaid() {
+	    	return billPaid;
+	    }
+	    public void setBillPaid(String billPaid) {
+	    	this.billPaid = billPaid;
+	    }
+	    public String getOrderCompleted() {
+	    	return orderCompleted;
+	    }
+	    public void setOrderCompleted(String orderCompleted) {
+	    	this.orderCompleted = orderCompleted;
+	    }
+	    public String getTreeCutDates() {
+	    	return treeCutDates;
+	    }
+	    public void setTreeCutDates(String treeCutDates) {
+	    	this.treeCutDates = treeCutDates;
+	    }
+	    public String getQuoteClientAccept() {
+	    	return quoteClientAccept;
+	    }
+	    public void setQuoteClientAccept(String quoteClientAccept) {
+	    	this.quoteClientAccept = quoteClientAccept;
+	    }
+	    public int getTreesCut() {
+	    	return treesCut;
+	    }
+	    public void setTreesCut(int treesCut) {
+	    	this.treesCut = treesCut;
+	    }
+	    public int getTotalTreesCut() {
+	    	return totalTreesCut;
+	    }
+	    public void setTotalTreesCut(int totalTreesCut) {
+	    	this.totalTreesCut = totalTreesCut;
+	    }
+	    public String getEasyClient() {
+	    	return easyClient;
+	    }
+	    public void setEasyClient(String easyClient) {
+	    	this.easyClient = easyClient;
+	    }
+	    public int getAmountDue() {
+	    	return amountDue;
+	    }
+	    public void setAmountDue(int amountDue) {
+	    	this.amountDue = amountDue;
+	    }
+	    public int getAmountPaid() {
+	    	return amountPaid;
+	    }
+	    public void getAmountDue(int amountPaid) {
+	    	this.amountPaid = amountPaid;
+	    }
+	    
+	    //  Credit card info
+	    public String getCardNumber() {
+	    	return cardNumber;
+	    }
+	    public void setCardNumber(String cardNumber) {
+	    	this.cardNumber = cardNumber;
+	    }
+	    public String getCardExpiration() {
+	    	return cardExpiration;
+	    }
+	    public void setCardExpiration(String cardExpiration) {
+	    	this.cardExpiration = cardExpiration;
+	    }
+	    public String getCardSecurityCode() {
+	    	return cardSecurityCode;
+	    }
+	    public void setCardSecurityCode(String cardSecurityCode) {
+	    	this.cardSecurityCode = cardSecurityCode;
 	    }
 	}
