@@ -31,6 +31,8 @@ public class user
 	    protected int treesCut;
 	    protected int totalTreesCut;
 	    protected String easyClient;
+	    protected int amountDue;
+	    protected int amountPaid;
 	    //  Credit card info
 	    protected String cardNumber;
 	    protected String cardExpiration;
@@ -48,12 +50,12 @@ public class user
 	    public user(String email,String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, 
 	    		String treeSize, String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, 
 	    		String price, String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
-	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, String cardNumber, 
-	    		String cardExpiration, String cardSecurityCode) 
+	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, int amountDue, int amoundPaid, 
+	    		String cardNumber, String cardExpiration, String cardSecurityCode) 
 	    {
 	    	this(firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, 
 	    			davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept,
-	    			treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	    			treesCut, totalTreesCut, easyClient, amountDue, amoundPaid, cardNumber, cardExpiration, cardSecurityCode);
 	    	this.email = email;
 	    }
 	 
@@ -61,8 +63,8 @@ public class user
 	    public user(String firstName, String lastName, String password, String birthday, String role, String pic1, String pic2, String pic3, String treeSize, 
 	    		String treeHeight, String location, String howNear, String clientNote, String quoteDavidAccept, String davidNote, String price, 
 	    		String workStart, String workEnd, String billCost, String billStatus, String billGiven, String billPaid, String orderCompleted, 
-	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, String cardNumber, String cardExpiration, 
-	    		String cardSecurityCode) 
+	    		String treeCutDates, String quoteClientAccept, int treesCut, int totalTreesCut, String easyClient, int amountDue, int amoundPaid, 
+	    		String cardNumber, String cardExpiration, String cardSecurityCode) 
 	    {
 	    	this.firstName = firstName;
 	    	this.lastName = lastName;
@@ -91,6 +93,8 @@ public class user
 	        this.quoteClientAccept = quoteClientAccept;
 	        this.treesCut = treesCut;
 	        this.totalTreesCut = totalTreesCut;
+	        this.amountDue = amountDue;
+	        this.amountPaid = amoundPaid;
 	        this.easyClient = easyClient;
 	        this.cardNumber = cardNumber;
 	        this.cardExpiration = cardExpiration;
@@ -280,6 +284,18 @@ public class user
 	    }
 	    public void setEasyClient(String easyClient) {
 	    	this.easyClient = easyClient;
+	    }
+	    public int getAmountDue() {
+	    	return amountDue;
+	    }
+	    public void setAmountDue(int amountDue) {
+	    	this.amountDue = amountDue;
+	    }
+	    public int getAmountPaid() {
+	    	return amountPaid;
+	    }
+	    public void getAmountDue(int amountPaid) {
+	    	this.amountPaid = amountPaid;
 	    }
 	    
 	    //  Credit card info

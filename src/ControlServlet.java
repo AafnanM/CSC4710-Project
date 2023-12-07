@@ -203,6 +203,8 @@ public class ControlServlet extends HttpServlet {
 	   	 	int treesCut = 0;
 	   	 	int totalTreesCut = 0;
 	   	 	String easyClient = request.getParameter("easyClient");
+	   	 	int amountDue = 0;
+	   	 	int amountPaid = 0;
 	   	 	//  Credit card info
 	   	 	String cardNumber = request.getParameter("cardNumber");
 	   	 	String cardExpiration = request.getParameter("cardExpiration");
@@ -214,7 +216,8 @@ public class ControlServlet extends HttpServlet {
 		   	 		System.out.println("Registration Successful! Added to database");
 		            user users = new user(email,firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-		            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+		            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+		            		cardSecurityCode);
 		   	 		userDAO.insert(users);
 		   	 		response.sendRedirect("login.jsp");
 	   	 		}
@@ -263,6 +266,8 @@ public class ControlServlet extends HttpServlet {
 	   	 	int treesCut = users.getTreesCut();
 	   	 	int totalTreesCut = users.getTotalTreesCut();
 	   	 	String easyClient = users.getEasyClient();
+	   	 	int amountDue = users.getAmountDue();
+	   	 	int amountPaid = users.getAmountPaid();
 	   	 	//  Credit card info
 	   	 	String cardNumber = users.getCardNumber();
 	   	 	String cardExpiration = users.getCardExpiration();
@@ -272,7 +277,7 @@ public class ControlServlet extends HttpServlet {
 		   	System.out.println("Quote submission successful! Updated database");
 	        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 	         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
 		 	userDAO.update(updatedUser);
 		 	activityPage(request, response, email);	
 	    }
@@ -311,6 +316,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -320,7 +327,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Quote acceptance successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	    	}
 	    	else {
@@ -369,6 +377,8 @@ public class ControlServlet extends HttpServlet {
 	   	 	int treesCut = users.getTreesCut();
 	   	 	int totalTreesCut = users.getTotalTreesCut();
 	   	 	String easyClient = users.getEasyClient();
+	   	 	int amountDue = users.getAmountDue();
+	   	 	int amountPaid = users.getAmountPaid();
 	   	 	//  Credit card info
 	   	 	String cardNumber = users.getCardNumber();
 	   	 	String cardExpiration = users.getCardExpiration();
@@ -378,7 +388,7 @@ public class ControlServlet extends HttpServlet {
 		   	System.out.println("Quote cancellation successful! Updated database");
 	        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 	         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
 		 	userDAO.update(updatedUser);
 		 	activityPage(request, response, email);	
 	    }
@@ -417,6 +427,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -426,7 +438,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Quote negotiation successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	    	}
 	    	else {
@@ -440,7 +453,11 @@ public class ControlServlet extends HttpServlet {
 	    	String email = currentUser;
 	    	user users = userDAO.getUser(email);
 
-	    	if (!users.getBillGiven().equals("")) {
+	    	//  Verify that bill status is not null
+	    	if (users.getBillStatus() == null)
+	    		users.setBillStatus("");
+	    	
+	    	if (!users.getBillGiven().equals("") && !users.billStatus.equals("Paid")) {
 		    	String firstName = users.getFirstName();
 		   	 	String lastName = users.getLastName();
 		   	 	String password = users.getPassword();
@@ -470,6 +487,9 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	//int amountPaid = users.getAmountPaid();
+		   	 	int amountPaid = users.getAmountPaid() + getIntValue(billCost);
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -479,7 +499,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Bill payment successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	    	}
 	    	else {
@@ -523,6 +544,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -532,7 +555,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Bill response successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	    	}
 	    	else {
@@ -582,6 +606,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -590,7 +616,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Quote response successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	   	 	}
 	   	 	else {
@@ -634,6 +661,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -643,7 +672,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Quote cancellation successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	   	 	}
 	   	 	else {
@@ -657,7 +687,11 @@ public class ControlServlet extends HttpServlet {
 	    	String email = request.getParameter("email");
 	    	user users = userDAO.getUser(email);
 	   	 	
-	   	 	if (userDAO.checkEmail(email) && users.getQuoteClientAccept().equals("Accepted")) {
+	    	//  Verify that bill status is not null
+	    	if (users.getBillStatus() == null)
+	    		users.setBillStatus("");
+	    	
+	   	 	if (userDAO.checkEmail(email) && users.getQuoteClientAccept().equals("Accepted") && !users.getBillStatus().equals("Awaiting payment")) {
 		   	 	String firstName = users.getFirstName();
 		   	 	String lastName = users.getLastName();
 		   	 	String password = users.getPassword();
@@ -687,6 +721,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue() + getIntValue(billCost);
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -696,7 +732,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Bill submission successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	   	 	}
 	   	 	else {
@@ -746,6 +783,8 @@ public class ControlServlet extends HttpServlet {
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
 		   	 	String easyClient = users.getEasyClient();
+		   	 	int amountDue = users.getAmountDue();
+		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
 		   	 	String cardNumber = users.getCardNumber();
 		   	 	String cardExpiration = users.getCardExpiration();
@@ -755,7 +794,8 @@ public class ControlServlet extends HttpServlet {
 			   	System.out.println("Order completion successful! Updated database");
 		        user updatedUser = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
 		         		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+	            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, 
+	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	   	 	}
 	   	 	else if (!userDAO.checkEmail(email)) {
@@ -783,10 +823,13 @@ public class ControlServlet extends HttpServlet {
 	        try { 
 	            Integer.parseInt(s); 
 	        } catch(NumberFormatException e) { 
+	        	System.out.println("Failure: Int was reset to 0");
 	            return 0; 
 	        } catch(NullPointerException e) {
+	        	System.out.println("Failure: Int was reset to 0");
 	            return 0;
 	        }
+	        System.out.println("Success: Int value parsed as " + Integer.parseInt(s));
 	        return Integer.parseInt(s);
 	    }
 

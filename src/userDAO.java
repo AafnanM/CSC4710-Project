@@ -125,6 +125,8 @@ public class userDAO
             int treesCut = resultSet.getInt("treesCut");
             int totalTreesCut = resultSet.getInt("totalTreesCut");
             String easyClient = resultSet.getString("easyClient");
+            int amountDue = resultSet.getInt("amountDue");
+            int amountPaid = resultSet.getInt("amountPaid");
             //  Credit card info
             String cardNumber = resultSet.getString("cardNumber");
             String cardExpiration = resultSet.getString("cardExpiration");
@@ -132,7 +134,7 @@ public class userDAO
              
             user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
             		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
         }
         resultSet.close();
@@ -187,6 +189,8 @@ public class userDAO
             int treesCut = resultSet.getInt("treesCut");
             int totalTreesCut = resultSet.getInt("totalTreesCut");
             String easyClient = resultSet.getString("easyClient");
+            int amountDue = resultSet.getInt("amountDue");
+            int amountPaid = resultSet.getInt("amountPaid");
             //  Credit card info
             String cardNumber = resultSet.getString("cardNumber");
             String cardExpiration = resultSet.getString("cardExpiration");
@@ -194,7 +198,7 @@ public class userDAO
              
             user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
             		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
         }
         resultSet.close();
@@ -241,6 +245,8 @@ public class userDAO
             int treesCut = resultSet.getInt("treesCut");
             int totalTreesCut = resultSet.getInt("totalTreesCut");
             String easyClient = resultSet.getString("easyClient");
+            int amountDue = resultSet.getInt("amountDue");
+            int amountPaid = resultSet.getInt("amountPaid");
             //  Credit card info
             String cardNumber = resultSet.getString("cardNumber");
             String cardExpiration = resultSet.getString("cardExpiration");
@@ -248,7 +254,7 @@ public class userDAO
              
             user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
             		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
             listUser.add(users);
         }
         resultSet.close();
@@ -266,8 +272,8 @@ public class userDAO
     	connect_func("root","pass1234");         
 		String sql = "insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, "
 				+ "clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, "
-				+ "treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amoundPaid, cardNumber, cardExpiration, cardSecurityCode) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, users.getEmail());
 			preparedStatement.setString(2, users.getFirstName());
@@ -299,10 +305,12 @@ public class userDAO
 			preparedStatement.setString(27, users.getTreesCut() + "");
 			preparedStatement.setString(28, users.getTotalTreesCut() + "");
 			preparedStatement.setString(29, users.getEasyClient());
+			preparedStatement.setString(30, users.getAmountDue() + "");
+			preparedStatement.setString(31, users.getAmountPaid() + "");
 			//  Credit card info
-			preparedStatement.setString(30, users.getCardNumber());
-			preparedStatement.setString(31, users.getCardExpiration());
-			preparedStatement.setString(32, users.getCardSecurityCode());
+			preparedStatement.setString(32, users.getCardNumber());
+			preparedStatement.setString(33, users.getCardExpiration());
+			preparedStatement.setString(34, users.getCardSecurityCode());
 
 		preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -324,7 +332,7 @@ public class userDAO
         String sql = "update User set firstName=?, lastName =?, password =?, birthday=?, role =?, pic1 =?, pic2 =?, pic3 =?, treeSize =?, treeHeight =?,"
         		+ "location =?, howNear =?, clientNote =?, quoteDavidAccept =?, davidNote =?, price =?, workStart =?, workEnd =?, billCost =?, billStatus =?,"
         		+ "billGiven =?, billPaid =?, orderCompleted =?, treeCutDates =?, quoteClientAccept =?, treesCut =?, totalTreesCut =?, easyClient =?, "
-        		+ "cardNumber =?, cardExpiration =?, cardSecurityCode =? "
+        		+ "amountDue =?, amountPaid =?, cardNumber =?, cardExpiration =?, cardSecurityCode =? "
         		+ "where email = ?";
         connect_func();
         
@@ -359,12 +367,14 @@ public class userDAO
 		preparedStatement.setString(26, users.getTreesCut() + "");
 		preparedStatement.setString(27, users.getTotalTreesCut() + "");
 		preparedStatement.setString(28, users.getEasyClient());
+		preparedStatement.setString(29, users.getAmountDue() + "");
+		preparedStatement.setString(30, users.getAmountPaid() + "");
 		//  Credit card info
-		preparedStatement.setString(29, users.getCardNumber());
-		preparedStatement.setString(30, users.getCardExpiration());
-		preparedStatement.setString(31, users.getCardSecurityCode());
+		preparedStatement.setString(31, users.getCardNumber());
+		preparedStatement.setString(32, users.getCardExpiration());
+		preparedStatement.setString(33, users.getCardSecurityCode());
 				
-		preparedStatement.setString(32, users.getEmail());
+		preparedStatement.setString(34, users.getEmail());
          
         boolean rowUpdated = preparedStatement.executeUpdate() > 0;
         preparedStatement.close();
@@ -412,6 +422,8 @@ public class userDAO
             int treesCut = resultSet.getInt("treesCut");
             int totalTreesCut = resultSet.getInt("totalTreesCut");
             String easyClient = resultSet.getString("easyClient");
+            int amountDue = resultSet.getInt("amountDue");
+            int amountPaid = resultSet.getInt("amountPaid");
             //  Credit card info
             String cardNumber = resultSet.getString("cardNumber");
             String cardExpiration = resultSet.getString("cardExpiration");
@@ -419,7 +431,7 @@ public class userDAO
             
             user = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
             		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
-            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode);
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
         }
          
         resultSet.close();
@@ -528,6 +540,8 @@ public class userDAO
 					            "treesCut VARCHAR(100), "+
 					            "totalTreesCut VARCHAR(100), "+
 					            "easyClient VARCHAR(100), "+
+					            "amountDue VARCHAR(100), "+
+					            "amountPaid VARCHAR(100), "+
 					            //  Credit card info
 					            "cardNumber VARCHAR(100), "+
 					            "cardExpiration VARCHAR(100), "+
@@ -535,19 +549,19 @@ public class userDAO
 					            
 					            "PRIMARY KEY (email) "+"); ")
         					};
-        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, cardNumber, cardExpiration, cardSecurityCode)"+
-        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', ''),"+
-			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '');")
+        String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode)"+
+        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
+			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', '');")
 			    			};
         
         //for loop to put these in database

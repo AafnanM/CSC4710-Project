@@ -7,7 +7,7 @@
 <title>Login to Database</title>
 </head>
 <body>
- <center>	<h1> Welcome to ppswap Login page </h1> </center>
+ <center>	<h1> Welcome to David Smith Contracting Login Page </h1> </center>
 	<div align="center">
 		<p> ${loginFailedStr} </p>
 		<form action="login" method="post">
