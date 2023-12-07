@@ -145,6 +145,7 @@ public class userDAO
     public List<user> listAllUsers(String type) throws SQLException {
         List<user> listUser = new ArrayList<user>();        
         String sql = "SELECT * FROM User";
+        //  CLIENT PAGE & DAVID PAGE COMMANDS
         if (type.equals("all"))
         	sql = "SELECT * FROM User";
         else if (type.equals("quote"))
@@ -153,12 +154,89 @@ public class userDAO
         	sql = "SELECT * FROM User WHERE billStatus != ''";
         else if (type.equals("order"))
         	sql = "SELECT * FROM User WHERE orderCompleted != ''";
+        //  ROOT PAGE COMMANDS - GENERAL
+        else if (type.equals("mostTrees"))
+        	sql = "SELECT * FROM User WHERE quoteClientAccept = 'Accepted' AND totalTreesCut = ( SELECT MAX(totalTreesCut) FROM User )";
+        else if (type.equals("highestTree"))
+        	sql = "SELECT * FROM User WHERE quoteClientAccept = 'Accepted' AND treeHeight = ( SELECT MAX(treeHeight) FROM User )";
+        else if (type.equals("easyClients"))
+        	sql = "SELECT * FROM User WHERE easyClient = 'Yes'";
+        else if (type.equals("oneTree"))
+        	sql = "SELECT * FROM User WHERE quoteClientAccept = 'Accepted' AND treesCut = '1'";
+        else if (type.equals("prospective"))
+        	sql = "SELECT * FROM User WHERE treeSize != '' AND quoteClientAccept != 'Accepted'";
         
         connect_func();      
         statement = (Statement) connect.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         
         while (resultSet.next()) {
+            String email = resultSet.getString("email");
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("lastName");
+            String password = resultSet.getString("password");
+            String birthday = resultSet.getString("birthday");
+            String role = resultSet.getString("role"); 
+            String pic1 = resultSet.getString("pic1"); 
+            String pic2 = resultSet.getString("pic2"); 
+            String pic3 = resultSet.getString("pic3"); 
+            String treeSize = resultSet.getString("treeSize"); 
+            String treeHeight = resultSet.getString("treeHeight"); 
+            String location = resultSet.getString("location"); 
+            String howNear = resultSet.getString("howNear"); 
+            String clientNote = resultSet.getString("clientNote"); 
+            String quoteDavidAccept = resultSet.getString("quoteDavidAccept"); 
+            String davidNote = resultSet.getString("davidNote"); 
+            String price = resultSet.getString("price"); 
+            //  Part 3
+            String workStart = resultSet.getString("workStart");
+            String workEnd = resultSet.getString("workEnd");
+            String billCost = resultSet.getString("billCost");
+            String billStatus = resultSet.getString("billStatus");
+            String billGiven = resultSet.getString("billGiven");
+            String billPaid = resultSet.getString("billPaid");
+            String orderCompleted = resultSet.getString("orderCompleted");
+            String treeCutDates = resultSet.getString("treeCutDates");
+            String quoteClientAccept = resultSet.getString("quoteClientAccept");
+            int treesCut = resultSet.getInt("treesCut");
+            int totalTreesCut = resultSet.getInt("totalTreesCut");
+            String easyClient = resultSet.getString("easyClient");
+            int amountDue = resultSet.getInt("amountDue");
+            int amountPaid = resultSet.getInt("amountPaid");
+            //  Credit card info
+            String cardNumber = resultSet.getString("cardNumber");
+            String cardExpiration = resultSet.getString("cardExpiration");
+            String cardSecurityCode = resultSet.getString("cardSecurityCode");
+             
+            user users = new user(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, 
+            		clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted,
+            		treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode);
+            listUser.add(users);
+        }
+        resultSet.close();
+        disconnect();        
+        return listUser;
+    }
+    
+    public List<user> listRootWithDate(String type, String date) throws SQLException {
+        List<user> listUser = new ArrayList<user>();        
+        String sql = "SELECT * FROM User";
+        //  ROOT PAGE COMMANDS - OVERDUE BILLS, BAD CLIENTS, AND GOOD CLIENTS
+        if (type.equals("overdue"))
+        	sql = "SELECT * FROM User WHERE billStatus != '' AND billPaid = '1111-11-11' AND billGiven < DATE_SUB('" + date + "', INTERVAL 7 DAY)";
+        else if (type.equals("bad"))
+        	sql = "SELECT * FROM User WHERE billStatus != '' AND "
+        			+ "( billGiven < DATE_SUB(billPaid, INTERVAL 7 DAY) OR ( billStatus != 'Paid' AND billGiven < DATE_SUB('" + date + "', INTERVAL 7 DAY) ) )";
+        else if (type.equals("good"))
+        	sql = "SELECT * FROM User WHERE billStatus = 'Paid' AND "
+        			+ "( billGiven = DATE_SUB(billPaid, INTERVAL 1 DAY) OR billPaid = billGiven)";
+        
+        connect_func();      
+        statement = (Statement) connect.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        
+        while (resultSet.next()) {
+        	System.out.println(resultSet.getString("email"));
             String email = resultSet.getString("email");
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("lastName");
@@ -272,7 +350,7 @@ public class userDAO
     	connect_func("root","pass1234");         
 		String sql = "insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, "
 				+ "clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, "
-				+ "treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amoundPaid, cardNumber, cardExpiration, cardSecurityCode) "
+				+ "treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode) "
 				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, users.getEmail());
@@ -550,18 +628,18 @@ public class userDAO
 					            "PRIMARY KEY (email) "+"); ")
         					};
         String[] TUPLES = {("insert into User(email, firstName, lastName, password, birthday, role, pic1, pic2, pic3, treeSize, treeHeight, location, howNear, clientNote, quoteDavidAccept, davidNote, price, workStart, workEnd, billCost, billStatus, billGiven, billPaid, orderCompleted, treeCutDates, quoteClientAccept, treesCut, totalTreesCut, easyClient, amountDue, amountPaid, cardNumber, cardExpiration, cardSecurityCode)"+
-        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', ''),"+
-			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', '', '', '');")
+        			"values ('susie@gmail.com', 'Susie ', 'Guzman', 'susie1234', '2000-06-27', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '05/29', '271'),"+
+			    		 	"('don@gmail.com', 'Don', 'Cummings','don123', '1969-03-20', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '04/26', '862'),"+
+			    	 	 	"('margarita@gmail.com', 'Margarita', 'Lawson','margarita1234', '1980-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '02/25', '247'),"+
+			    		 	"('jo@gmail.com', 'Jo', 'Brady','jo1234', '2002-02-02', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '01/24', '795'),"+
+			    		 	"('wallace@gmail.com', 'Wallace', 'Moore','wallace1234', '1971-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '03/25', '473'),"+
+			    		 	"('amelia@gmail.com', 'Amelia', 'Phillips','amelia1234', '2000-03-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '09/24', '836'),"+
+			    			"('sophie@gmail.com', 'Sophie', 'Pierce','sophie1234', '1999-06-15', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '10/25', '252'),"+
+			    			"('angelo@gmail.com', 'Angelo', 'Francis','angelo1234', '2021-06-14', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '12/28', '870'),"+
+			    			"('rudy@gmail.com', 'Rudy', 'Smith','rudy1234', '1706-06-05', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '01/24', '362'),"+
+			    			"('jeannette@gmail.com', 'Jeannette ', 'Stone','jeannette1234', '2001-04-24', 'Client', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'XXXX XXXX XXXX XXXX', '06/27', '643'),"+
+			    			"('david@gmail.com', 'David ', 'Smith','david1234', '2020-02-03', 'David Smith', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'N/A', 'N/A', 'N/A'),"+
+			    			"('root', 'default', 'default','pass1234', '2020-02-03', 'Admin root', '', '', '', '', '', '', '', '', '', '', '', '1111-11-11', '1111-11-11', '', '', '1111-11-11', '1111-11-11', '', '', '', '', '', '', '', '', 'N/A', 'N/A', 'N/A');")
 			    			};
         
         //for loop to put these in database

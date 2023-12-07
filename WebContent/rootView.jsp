@@ -28,9 +28,10 @@
                 <th>Password</th>
                 <th>Birthday</th>
                 <th>Role</th>
-                <th>Card number</th>
+                <th>Credit card number</th>
                 <th>Card expiration date</th>
                 <th>Card security code</th>
+                <th>Easy Client?</th>
             </tr>
             <c:forEach var="users" items="${listUser}">
                 <tr style="text-align:center">
@@ -43,6 +44,7 @@
                     <td><c:out value="${users.cardNumber}" /></td>
                     <td><c:out value="${users.cardExpiration}" /></td>
                     <td><c:out value="${users.cardSecurityCode}" /></td>
+                    <td><c:out value="${users.easyClient}" /></td>
             </c:forEach>
         </table>
         <table border="1" cellpadding="6">
@@ -56,6 +58,7 @@
                 <th>Picture 3</th>
                 <th>Tree size</th>
                 <th>Tree height</th>
+                <th>No. of trees</th>
                 <th>Tree location</th>
                 <th>How near</th>
                 <th>Client's note</th>
@@ -76,6 +79,7 @@
                     <td><c:out value="${users.pic3}" /></td>
                     <td><c:out value="${users.treeSize}" /></td>
                     <td><c:out value="${users.treeHeight}" /></td>
+                    <td><c:out value="${users.treesCut}" /></td>
                     <td><c:out value="${users.location}" /></td>
                     <td><c:out value="${users.howNear}" /></td>
                     <td><c:out value="${users.clientNote}" /></td>
@@ -151,12 +155,14 @@
 	                <th>Email</th>
 	                <th>First name</th>
 	                <th>Last name</th>
+	                <th>Total no. of trees</th>
             	</tr>
             	<c:forEach var="users" items="${listMostTreesCut}">
 	                <tr style="text-align:center">
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
 	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.totalTreesCut}" /></td>
 	            	</tr>
 	            </c:forEach>
         </table>
@@ -207,12 +213,42 @@
 	                <th>Email</th>
 	                <th>First name</th>
 	                <th>Last name</th>
+	                <th>Picture 1</th>
+	                <th>Picture 2</th>
+	                <th>Picture 3</th>
+	                <th>Tree size</th>
+	                <th>Tree height</th>
+	                <th>No. of trees</th>
+	                <th>Tree location</th>
+	                <th>How near</th>
+	                <th>Client's response</th>
+	                <th>Client's note</th>
+	                <th>David's response</th>
+	                <th>David's note</th>
+	                <th>Price</th>
+	                <th>Work start date</th>
+	                <th>Work finish date</th>
             	</tr>
             	<c:forEach var="users" items="${listOneTreeQuotes}">
 	                <tr style="text-align:center">
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
 	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.pic1}" /></td>
+	                    <td><c:out value="${users.pic2}" /></td>
+	                    <td><c:out value="${users.pic3}" /></td>
+	                    <td><c:out value="${users.treeSize}" /></td>
+	                    <td><c:out value="${users.treeHeight}" /></td>
+	                    <td><c:out value="${users.treesCut}" /></td>
+	                    <td><c:out value="${users.location}" /></td>
+	                    <td><c:out value="${users.howNear}" /></td>
+	                    <td><c:out value="${users.quoteClientAccept}" /></td>
+	                    <td><c:out value="${users.clientNote}" /></td>
+	                    <td><c:out value="${users.quoteDavidAccept}" /></td>
+	                    <td><c:out value="${users.davidNote}" /></td>
+	                    <td><c:out value="${users.price}" /></td>
+	                    <td><c:out value="${users.workStart}" /></td>
+	                    <td><c:out value="${users.workEnd}" /></td>
 	            	</tr>
 	            </c:forEach>
         </table>
@@ -264,6 +300,8 @@
 	                <th>Email</th>
 	                <th>First name</th>
 	                <th>Last name</th>
+	                <th>Bill cost</th>
+	                <th>Bill status</th>
 	                <th>Bill issue date</th>
 	                <th>Bill payment date</th>
             	</tr>
@@ -272,6 +310,8 @@
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
 	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.billCost}" /></td>
+	                    <td><c:out value="${users.billStatus}" /></td>
 	                    <td><c:out value="${users.billGiven}" /></td>
 	                    <td><c:out value="${users.billPaid}" /></td>
 	            	</tr>
@@ -286,6 +326,7 @@
 	                <th>Email</th>
 	                <th>First name</th>
 	                <th>Last name</th>
+	                <th>Bill status</th>
 	                <th>Bill issue date</th>
 	                <th>Bill payment date</th>
             	</tr>
@@ -294,6 +335,7 @@
 	                    <td><c:out value="${users.email}" /></td>
 	                    <td><c:out value="${users.firstName}" /></td>
 	                    <td><c:out value="${users.lastName}" /></td>
+	                    <td><c:out value="${users.billStatus}" /></td>
 	                    <td><c:out value="${users.billGiven}" /></td>
 	                    <td><c:out value="${users.billPaid}" /></td>
 	            	</tr>

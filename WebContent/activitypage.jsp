@@ -54,6 +54,12 @@
 						</td>
 					</tr>
 					<tr>
+						<th>No. of trees: </th>
+						<td align="center" colspan="3">
+							<input type="text" name="treesCut" size="45"  value="Number of trees" onfocus="this.value=''">
+						</td>
+					</tr>
+					<tr>
 						<th>Location: </th>
 						<td align="center" colspan="3">
 							<input type="text" name="location" size="45"  value="Enter location" onfocus="this.value=''">
@@ -92,7 +98,8 @@
 	                <th>Picture 2</th>
 	                <th>Picture 3</th>
 	                <th>Tree size</th>
-	                <th>Tree height</th>
+	                <th>Tree height (m)</th>
+	                <th>No. of trees</th>
 	                <th>Tree location</th>
 	                <th>How near</th>
 	                <th>Client's response</th>
@@ -113,6 +120,7 @@
 	                    <td><c:out value="${users.pic3}" /></td>
 	                    <td><c:out value="${users.treeSize}" /></td>
 	                    <td><c:out value="${users.treeHeight}" /></td>
+	                    <td><c:out value="${users.treesCut}" /></td>
 	                    <td><c:out value="${users.location}" /></td>
 	                    <td><c:out value="${users.howNear}" /></td>
 	                    <td><c:out value="${users.quoteClientAccept}" /></td>

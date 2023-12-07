@@ -86,6 +86,9 @@ public class ControlServlet extends HttpServlet {
         	case "/davidRevenueReport":
         		davidRevenueReport(request, response);
         		break;
+        	case "/rootDate":
+        		rootSubmit(request, response);
+        		break;
         	case "/initialize":
         		userDAO.init();
         		System.out.println("Database successfully initialized!");
@@ -124,6 +127,11 @@ public class ControlServlet extends HttpServlet {
 	    private void rootPage(HttpServletRequest request, HttpServletResponse response, String view) throws ServletException, IOException, SQLException{
 	    	System.out.println("root view");
 			request.setAttribute("listUser", userDAO.listAllUsers("all"));
+			request.setAttribute("listMostTreesCut", userDAO.listAllUsers("mostTrees"));
+			request.setAttribute("listHighestTreeCut", userDAO.listAllUsers("highestTree"));
+			request.setAttribute("listEasyClients", userDAO.listAllUsers("easyClients"));
+			request.setAttribute("listOneTreeQuotes", userDAO.listAllUsers("oneTree"));
+			request.setAttribute("listProspectiveClients", userDAO.listAllUsers("prospective"));
 	    	request.getRequestDispatcher("rootView.jsp").forward(request, response);
 	    }
 	    
@@ -191,12 +199,12 @@ public class ControlServlet extends HttpServlet {
 	   	 	String davidNote = request.getParameter("davidNote"); 
 	   	 	String price = request.getParameter("price"); 
 	   	 	//  Part 3
-	   	 	String workStart = request.getParameter("workStart");
-	   	 	String workEnd = request.getParameter("workEnd");
+	   	 	String workStart = "1111-11-11";
+	   	 	String workEnd = "1111-11-11";
 	   	 	String billCost = request.getParameter("billCost");
 	   	 	String billStatus = request.getParameter("billStatus");
-	   	 	String billGiven = request.getParameter("billGiven");
-	   	 	String billPaid = request.getParameter("billPaid");
+	   	 	String billGiven = "1111-11-11";
+	   	 	String billPaid = "1111-11-11";
 	   	 	String orderCompleted = request.getParameter("orderCompleted");
 	   	 	String treeCutDates = request.getParameter("treeCutDates");
 	   	 	String quoteClientAccept = request.getParameter("quoteClientAccept");
@@ -263,7 +271,7 @@ public class ControlServlet extends HttpServlet {
 	   	 	String orderCompleted = users.getOrderCompleted();
 	   	 	String treeCutDates = users.getTreeCutDates();
 	   	 	String quoteClientAccept = "";
-	   	 	int treesCut = users.getTreesCut();
+	   	 	int treesCut = getIntValue(request.getParameter("treesCut")); 
 	   	 	int totalTreesCut = users.getTotalTreesCut();
 	   	 	String easyClient = users.getEasyClient();
 	   	 	int amountDue = users.getAmountDue();
@@ -285,6 +293,10 @@ public class ControlServlet extends HttpServlet {
 	    private void clientQuoteAccept(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 	    	String email = currentUser;
 	    	user users = userDAO.getUser(email);
+	    	
+	    	//  Verify that quoteClientAccept is not null
+	    	if (users.getQuoteClientAccept() == null)
+	    		users.setQuoteClientAccept("");
 
 	    	if (users.getQuoteDavidAccept().equals("Accepted") && !users.getQuoteClientAccept().equals("Accepted")) {
 		    	String firstName = users.getFirstName();
@@ -312,10 +324,18 @@ public class ControlServlet extends HttpServlet {
 		   	 	String billPaid = users.getBillPaid();
 		   	 	String orderCompleted = users.getOrderCompleted();
 		   	 	String treeCutDates = users.getTreeCutDates();
+		   	 	
+		   	 	//  Decide if user is an easy client
+		   	 	String easyClient = "";
+		   	 	if (users.getQuoteClientAccept().equals("Negotiating"))
+		   	 		easyClient = "No";
+		   	 	else 
+		   	 		easyClient = "Yes";
+		   	 	
 		   	 	String quoteClientAccept = "Accepted";
 		   	 	int treesCut = users.getTreesCut();
-		   	 	int totalTreesCut = users.getTotalTreesCut();
-		   	 	String easyClient = users.getEasyClient();
+		   	 	int totalTreesCut = users.getTotalTreesCut() + users.getTreesCut();
+		   	 	//String easyClient = users.getEasyClient();
 		   	 	int amountDue = users.getAmountDue();
 		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
@@ -397,7 +417,7 @@ public class ControlServlet extends HttpServlet {
 	    	String email = currentUser;
 	    	user users = userDAO.getUser(email);
 
-	    	if (!users.getQuoteDavidAccept().equals("Accepted") && !users.getQuoteClientAccept().equals("Accepted")) {
+	    	if (!users.getQuoteDavidAccept().equals("") && !users.getQuoteClientAccept().equals("Accepted")) {
 		    	String firstName = users.getFirstName();
 		   	 	String lastName = users.getLastName();
 		   	 	String password = users.getPassword();
@@ -426,7 +446,7 @@ public class ControlServlet extends HttpServlet {
 		   	 	String quoteClientAccept = "Negotiating";
 		   	 	int treesCut = users.getTreesCut();
 		   	 	int totalTreesCut = users.getTotalTreesCut();
-		   	 	String easyClient = users.getEasyClient();
+		   	 	String easyClient = "No";
 		   	 	int amountDue = users.getAmountDue();
 		   	 	int amountPaid = users.getAmountPaid();
 		   	 	//  Credit card info
@@ -442,7 +462,7 @@ public class ControlServlet extends HttpServlet {
 	            		cardSecurityCode);
 			 	userDAO.update(updatedUser);
 	    	}
-	    	else {
+	    	else if (users.getQuoteDavidAccept().equals("Accepted") && users.getQuoteClientAccept().equals("Accepted")){
 	    		System.out.println("Negotiation failed, both parties already accepted the quote");
 	    		request.setAttribute("errorOne","Negotiation failed: Both parties already accepted the quote.");
 	    	}
@@ -714,7 +734,7 @@ public class ControlServlet extends HttpServlet {
 		   	 	String billCost = request.getParameter("billCost");
 		   	 	String billStatus = "Awaiting payment";
 		   	 	String billGiven = request.getParameter("billGiven");
-		   	 	String billPaid = users.getBillPaid();
+		   	 	String billPaid = "1111-11-11";
 		   	 	String orderCompleted = users.getOrderCompleted();
 		   	 	String treeCutDates = users.getTreeCutDates();
 		   	 	String quoteClientAccept = users.getQuoteClientAccept();
@@ -812,6 +832,16 @@ public class ControlServlet extends HttpServlet {
 			request.setAttribute("listRevenue", userDAO.listRevenue(revenueStart, revenueEnd));
 			System.out.println("Revenue report retrieved from database");
 	   	 	davidPage(request, response, "");
+	    }
+	    
+	    private void rootSubmit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+	    	String date = request.getParameter("rootDate");
+	   	 	
+			request.setAttribute("listOverdueBills", userDAO.listRootWithDate("overdue", date));
+			request.setAttribute("listBadClients", userDAO.listRootWithDate("bad", date));
+			request.setAttribute("listGoodClients", userDAO.listRootWithDate("good", date));
+			System.out.println("Overdue clients, bad clients, and good clients retrieved from database");
+	   	 	rootPage(request, response, "");
 	    }
 	    
 	    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -31,6 +31,7 @@
 	                <th>Picture 3</th>
 	                <th>Tree size</th>
 	                <th>Tree height</th>
+	                <th>No. of trees</th>
 	                <th>Tree location</th>
 	                <th>How near</th>
 	                <th>Client's response</th>
@@ -51,6 +52,7 @@
 	                    <td><c:out value="${users.pic3}" /></td>
 	                    <td><c:out value="${users.treeSize}" /></td>
 	                    <td><c:out value="${users.treeHeight}" /></td>
+	                    <td><c:out value="${users.treesCut}" /></td>
 	                    <td><c:out value="${users.location}" /></td>
 	                    <td><c:out value="${users.howNear}" /></td>
 	                    <td><c:out value="${users.quoteClientAccept}" /></td>
